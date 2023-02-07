@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 rootProject.name = "rrmovies"
 include ':app'
 include ':features:login'
+include ':commons'
