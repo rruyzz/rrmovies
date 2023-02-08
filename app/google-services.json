@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1013570413030",
+    "project_id": "rrmovies-d1a0a",
+    "storage_bucket": "rrmovies-d1a0a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1013570413030:android:dfa3cf8975073d7386f627",
+        "android_client_info": {
+          "package_name": "com.app.rrmovies"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1013570413030-nnt33raabljk15tt18f10tjp5lcobje8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXxSaY68jp0WFybLeWn_PfVKKB7vzpR2c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1013570413030-nnt33raabljk15tt18f10tjp5lcobje8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
