@@ -74,22 +74,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setButton() = with(binding) {
         buttonStart.setOnClickListener {
-            oneTapClient.beginSignIn(signInRequest)
-                .addOnSuccessListener { result ->
-                    try {
-                        startIntentSenderForResult(
-                            result.pendingIntent.intentSender, REQ_ONE_TAP,
-                            null, 0, 0, 0, null
-                        )
-                    } catch (e: IntentSender.SendIntentException) {
-                        Log.e(TAG, "Couldn't start One Tap UI: ${e.localizedMessage}")
-                    }
-                }
-                .addOnFailureListener { e ->
-                    // No saved credentials found. Launch the One Tap sign-up flow, or
-                    // do nothing and continue presenting the signed-out UI.
-                    Log.d(TAG, e.localizedMessage)
-                }
+            viewModel.signIn()
         }
     }
 
@@ -118,7 +103,7 @@ class LoginActivity : AppCompatActivity() {
     private fun observerViewModel() {
         lifecycleScope.launch {
             viewModel.loginResult.collect {
-                Toast.makeText(this@LoginActivity, it.toString(), Toast.LENGTH_SHORT).show()
+                binding.customView.setState(it)
             }
         }
     }

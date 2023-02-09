@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.app.commons.databinding.LayoutListItemViewBinding
 
 class PosterListCustomViewAdapter(
-    private val list: List<String>
+    private var list: List<String> = listOf()
 ) : RecyclerView.Adapter<PosterListCustomViewAdapter.PosterListViewHolder>() {
 
 
@@ -20,6 +20,10 @@ class PosterListCustomViewAdapter(
         return PosterListViewHolder(binding.root)
     }
 
+    fun setData(_list: List<String>){
+        list = _list
+        notifyDataSetChanged()
+    }
     override fun getItemCount() = list.size
 
     override fun getItemId(position: Int) = position.toLong()
