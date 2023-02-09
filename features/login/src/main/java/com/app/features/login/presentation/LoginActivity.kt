@@ -38,27 +38,11 @@ class LoginActivity : AppCompatActivity() {
         hideStatusBar()
         setButton()
         observerViewModel()
+        setGoogle()
+        setView()
+    }
 
-        oneTapClient = Identity.getSignInClient(this)
-        signInRequest = BeginSignInRequest.builder()
-            .setPasswordRequestOptions(
-                BeginSignInRequest.PasswordRequestOptions.builder()
-                    .setSupported(true)
-                    .build()
-            )
-            .setGoogleIdTokenRequestOptions(
-                BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
-                    .setSupported(true)
-                    // Your server's client ID, not your Android client ID.
-                    .setServerClientId(getString(R.string.web_client_id))
-                    // Only show accounts previously used to sign in.
-                    .setFilterByAuthorizedAccounts(false)
-                    .build()
-            )
-            // Automatically sign in when exactly one credential is retrieved.
-            .setAutoSelectEnabled(true)
-            .build()
-        // ...
+    private fun setView() {
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -107,6 +91,28 @@ class LoginActivity : AppCompatActivity() {
                     Log.d(TAG, e.localizedMessage)
                 }
         }
+    }
+
+    private fun setGoogle() {
+        oneTapClient = Identity.getSignInClient(this)
+        signInRequest = BeginSignInRequest.builder()
+            .setPasswordRequestOptions(
+                BeginSignInRequest.PasswordRequestOptions.builder()
+                    .setSupported(true)
+                    .build()
+            )
+            .setGoogleIdTokenRequestOptions(
+                BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
+                    .setSupported(true)
+                    // Your server's client ID, not your Android client ID.
+                    .setServerClientId(getString(R.string.web_client_id))
+                    // Only show accounts previously used to sign in.
+                    .setFilterByAuthorizedAccounts(false)
+                    .build()
+            )
+            // Automatically sign in when exactly one credential is retrieved.
+            .setAutoSelectEnabled(true)
+            .build()
     }
 
     private fun observerViewModel() {

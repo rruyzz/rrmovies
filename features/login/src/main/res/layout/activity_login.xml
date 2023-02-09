@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".presentation.LoginActivity">
 
+
     <ImageView
         android:id="@+id/background"
         android:layout_width="0dp"
@@ -33,6 +34,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="16dp"/>
+
+    <com.app.commons.presentation.customView.PosterListCustomView
+        android:id="@+id/customView"
+        app:custom_component_titles="sdklsdkjf"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView
         android:id="@+id/backgroundBlack"
