@@ -36,9 +36,24 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         hideStatusBar()
+        setGoogleTap()
         setButton()
         observerViewModel()
+    }
 
+    private fun observerViewModel() {
+        lifecycleScope.launch {
+            viewModel.loginResult.collect {
+                Toast.makeText(this@LoginActivity, it.toString(), Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+    private fun setButton() = with(binding) {
+        buttonStart.setOnClickListener {
+            navigateGoogleTap()
+        }
+    }
+    private fun setGoogleTap() {
         oneTapClient = Identity.getSignInClient(this)
         signInRequest = BeginSignInRequest.builder()
             .setPasswordRequestOptions(
@@ -60,63 +75,56 @@ class LoginActivity : AppCompatActivity() {
             .build()
         // ...
     }
+
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        treatGoogleTap(requestCode, resultCode, data)
+    }
+    private fun navigateGoogleTap() {
+        oneTapClient.beginSignIn(signInRequest)
+            .addOnSuccessListener { result ->
+                try {
+                    startIntentSenderForResult(
+                        result.pendingIntent.intentSender, REQ_ONE_TAP,
+                        null, 0, 0, 0, null
+                    )
+                } catch (e: IntentSender.SendIntentException) {
+                    Log.e(TAG, "Couldn't start One Tap UI: ${e.localizedMessage}")
+                }
+            }
+            .addOnFailureListener { e ->
+                // No saved credentials found. Launch the One Tap sign-up flow, or
+                // do nothing and continue presenting the signed-out UI.
+                Log.d(TAG, e.localizedMessage)
+            }
+    }
 
+    private fun treatGoogleTap(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
             REQ_ONE_TAP -> {
                 try {
-                    // ...
+                    sendToast("Success.")
                 } catch (e: ApiException) {
                     when (e.statusCode) {
                         CommonStatusCodes.CANCELED -> {
+                            sendToast("One-tap dialog was closed.")
                             Log.d(TAG, "One-tap dialog was closed.")
                             // Don't re-prompt the user.
                             showOneTapUI = false
                         }
                         CommonStatusCodes.NETWORK_ERROR -> {
-                            Log.d(TAG, "One-tap encountered a network error.")
-                            // Try again or just ignore.
+                            sendToast("One-tap encountered a network error.")
                         }
                         else -> {
-                            Log.d(TAG, "Couldn't get credential from result." +
-                                    " (${e.localizedMessage})")
+                            sendToast("Couldn't get credential from result.")
+                            Log.d(TAG, "Couldn't get credential from result." + " (${e.localizedMessage})")
                         }
                     }
                 }
             }
         }
     }
-
-    private fun setButton() = with(binding) {
-        buttonStart.setOnClickListener {
-            oneTapClient.beginSignIn(signInRequest)
-                .addOnSuccessListener { result ->
-                    try {
-                        startIntentSenderForResult(
-                            result.pendingIntent.intentSender, REQ_ONE_TAP,
-                            null, 0, 0, 0, null
-                        )
-                    } catch (e: IntentSender.SendIntentException) {
-                        Log.e(TAG, "Couldn't start One Tap UI: ${e.localizedMessage}")
-                    }
-                }
-                .addOnFailureListener { e ->
-                    // No saved credentials found. Launch the One Tap sign-up flow, or
-                    // do nothing and continue presenting the signed-out UI.
-                    Log.d(TAG, e.localizedMessage)
-                }
-        }
-    }
-
-    private fun observerViewModel() {
-        lifecycleScope.launch {
-            viewModel.loginResult.collect {
-                Toast.makeText(this@LoginActivity, it.toString(), Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
     private fun hideStatusBar() {
         with(window) {
             decorView.systemUiVisibility =
@@ -125,5 +133,10 @@ class LoginActivity : AppCompatActivity() {
                 window.attributes.flags and WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS.inv()
             statusBarColor = Color.TRANSPARENT
         }
+    }
+
+    private fun sendToast(text: String) {
+        Toast.makeText(this@LoginActivity, text, Toast.LENGTH_SHORT).show()
+
     }
 }
