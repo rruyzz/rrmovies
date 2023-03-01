@@ -59,3 +59,4 @@ class LoginActivity : AppCompatActivity() {
 }
 
 //https://proandroiddev.com/supercharge-android-mvvm-part-1-viewstate-and-actionstate-5816500580ed
+//https://medium.com/mobile-app-development-publication/comparing-stateflow-sharedflow-and-callbackflow-2f0d03d48a43
