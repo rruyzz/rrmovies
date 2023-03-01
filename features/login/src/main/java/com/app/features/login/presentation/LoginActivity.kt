@@ -1,23 +1,16 @@
 package com.app.features.login.presentation
 
-import android.content.ContentValues.TAG
 import android.content.Intent
-import android.content.IntentSender
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.app.features.login.R
 import com.app.features.login.databinding.ActivityLoginBinding
-import com.google.android.gms.auth.api.identity.BeginSignInRequest
-import com.google.android.gms.auth.api.identity.Identity
-import com.google.android.gms.auth.api.identity.SignInClient
-import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.common.api.CommonStatusCodes
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -25,10 +18,7 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private val viewModel: LoginViewModel by viewModel()
-    private lateinit var oneTapClient: SignInClient
-    private lateinit var signInRequest: BeginSignInRequest
-    private val REQ_ONE_TAP = 2  // Can be any integer unique to the Activity
-    private var showOneTapUI = true
+    private val collectingScope = CoroutineScope(Dispatchers.Default)
 
     // ...
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,103 +26,25 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         hideStatusBar()
-        setGoogleTap()
         setButton()
-        observerViewModel()
+        actionObserver()
     }
 
-    private fun observerViewModel() {
-        lifecycleScope.launch {
-            viewModel.loginResult.collect {
-                Toast.makeText(this@LoginActivity, it.toString(), Toast.LENGTH_SHORT).show()
+    private fun actionObserver() = collectingScope.launch {
+        viewModel.action.collect{ action ->
+            when(action) {
+                is LoginAction.Navigate -> navigateMainActivity()
             }
         }
     }
-
     private fun setButton() = with(binding) {
         buttonStart.setOnClickListener {
-            navigateGoogleTap()
-//            startActivity(Intent(this@LoginActivity, OtherActivity::class.java))
+            viewModel.onButtonClick()
         }
     }
 
-    private fun setGoogleTap() {
-        oneTapClient = Identity.getSignInClient(this)
-        signInRequest = BeginSignInRequest.builder()
-//            .setPasswordRequestOptions(
-//                BeginSignInRequest.PasswordRequestOptions.builder()
-//                    .setSupported(true)
-//                    .build()
-//            )
-            .setGoogleIdTokenRequestOptions(
-                BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
-                    .setSupported(true)
-                    // Your server's client ID, not your Android client ID.
-                    .setServerClientId(getString(R.string.web_client_id))
-                    // Only show accounts previously used to sign in.
-                    .setFilterByAuthorizedAccounts(false)
-                    .build()
-            )
-            // Automatically sign in when exactly one credential is retrieved.
-            .setAutoSelectEnabled(true)
-            .build()
-        // ...
-    }
-//    https://medium.com/firebase-developers/how-to-authenticate-to-firebase-using-google-one-tap-in-jetpack-compose-60b30e621d0d
-
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        treatGoogleTap(requestCode, resultCode, data)
-    }
-
-    private fun navigateGoogleTap() {
-        oneTapClient.beginSignIn(signInRequest)
-            .addOnSuccessListener { result ->
-                try {
-                    startIntentSenderForResult(
-                        result.pendingIntent.intentSender, REQ_ONE_TAP,
-                        null, 0, 0, 0, null
-                    )
-                } catch (e: IntentSender.SendIntentException) {
-                    Log.e(TAG, "Couldn't start One Tap UI: ${e.localizedMessage}")
-                }
-            }
-            .addOnFailureListener { e ->
-                // No saved credentials found. Launch the One Tap sign-up flow, or
-                // do nothing and continue presenting the signed-out UI.
-                Log.d(TAG, e.localizedMessage)
-            }
-    }
-
-    private fun treatGoogleTap(requestCode: Int, resultCode: Int, data: Intent?) {
-        when (requestCode) {
-            REQ_ONE_TAP -> {
-                try {
-                    startActivity(Intent(this@LoginActivity, OtherActivity::class.java))
-                    sendToast("Success.")
-                } catch (e: ApiException) {
-                    when (e.statusCode) {
-                        CommonStatusCodes.CANCELED -> {
-                            sendToast("One-tap dialog was closed.")
-                            Log.d(TAG, "One-tap dialog was closed.")
-                            // Don't re-prompt the user.
-                            showOneTapUI = false
-                        }
-                        CommonStatusCodes.NETWORK_ERROR -> {
-                            sendToast("One-tap encountered a network error.")
-                        }
-                        else -> {
-                            sendToast("Couldn't get credential from result.")
-                            Log.d(
-                                TAG,
-                                "Couldn't get credential from result." + " (${e.localizedMessage})"
-                            )
-                        }
-                    }
-                }
-            }
-        }
+    private fun navigateMainActivity() {
+        startActivity(Intent(this@LoginActivity, OtherActivity::class.java))
     }
 
     private fun hideStatusBar() {
@@ -144,9 +56,6 @@ class LoginActivity : AppCompatActivity() {
             statusBarColor = Color.TRANSPARENT
         }
     }
-
-    private fun sendToast(text: String) {
-        Toast.makeText(this@LoginActivity, text, Toast.LENGTH_SHORT).show()
-
-    }
 }
+
+//https://proandroiddev.com/supercharge-android-mvvm-part-1-viewstate-and-actionstate-5816500580ed
