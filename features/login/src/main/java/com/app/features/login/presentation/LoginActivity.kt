@@ -48,19 +48,22 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+
     private fun setButton() = with(binding) {
         buttonStart.setOnClickListener {
             navigateGoogleTap()
+//            startActivity(Intent(this@LoginActivity, OtherActivity::class.java))
         }
     }
+
     private fun setGoogleTap() {
         oneTapClient = Identity.getSignInClient(this)
         signInRequest = BeginSignInRequest.builder()
-            .setPasswordRequestOptions(
-                BeginSignInRequest.PasswordRequestOptions.builder()
-                    .setSupported(true)
-                    .build()
-            )
+//            .setPasswordRequestOptions(
+//                BeginSignInRequest.PasswordRequestOptions.builder()
+//                    .setSupported(true)
+//                    .build()
+//            )
             .setGoogleIdTokenRequestOptions(
                 BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
                     .setSupported(true)
@@ -75,12 +78,14 @@ class LoginActivity : AppCompatActivity() {
             .build()
         // ...
     }
+//    https://medium.com/firebase-developers/how-to-authenticate-to-firebase-using-google-one-tap-in-jetpack-compose-60b30e621d0d
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         treatGoogleTap(requestCode, resultCode, data)
     }
+
     private fun navigateGoogleTap() {
         oneTapClient.beginSignIn(signInRequest)
             .addOnSuccessListener { result ->
@@ -104,6 +109,7 @@ class LoginActivity : AppCompatActivity() {
         when (requestCode) {
             REQ_ONE_TAP -> {
                 try {
+                    startActivity(Intent(this@LoginActivity, OtherActivity::class.java))
                     sendToast("Success.")
                 } catch (e: ApiException) {
                     when (e.statusCode) {
@@ -118,13 +124,17 @@ class LoginActivity : AppCompatActivity() {
                         }
                         else -> {
                             sendToast("Couldn't get credential from result.")
-                            Log.d(TAG, "Couldn't get credential from result." + " (${e.localizedMessage})")
+                            Log.d(
+                                TAG,
+                                "Couldn't get credential from result." + " (${e.localizedMessage})"
+                            )
                         }
                     }
                 }
             }
         }
     }
+
     private fun hideStatusBar() {
         with(window) {
             decorView.systemUiVisibility =
