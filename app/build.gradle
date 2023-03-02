@@ -50,6 +50,7 @@ dependencies {
 
 
     implementation project(':features:login')
+    implementation project(':features:home')
     implementation project(':commons')
 
 }

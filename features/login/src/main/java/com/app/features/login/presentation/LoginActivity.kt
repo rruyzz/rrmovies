@@ -9,9 +9,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.app.features.login.databinding.ActivityLoginBinding
+import com.example.navigation.HomeNavigator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity() {
@@ -19,8 +21,8 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private val viewModel: LoginViewModel by viewModel()
     private val collectingScope = CoroutineScope(Dispatchers.Default)
+    private val homeNavigator: HomeNavigator by inject()
 
-    // ...
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -44,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun navigateMainActivity() {
-        startActivity(Intent(this@LoginActivity, OtherActivity::class.java))
+        homeNavigator.navigate(this)
     }
 
     private fun hideStatusBar() {
