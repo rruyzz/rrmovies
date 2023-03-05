@@ -1,1 +1,3 @@
-<resources></resources>
+<resources>
+    <string name="text_home_title">What do you want to watch?</string>
+</resources>
