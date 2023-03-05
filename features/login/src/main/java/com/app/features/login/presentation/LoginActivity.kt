@@ -40,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
     private fun setButton() = with(binding) {
-        buttonStart.setOnClickListener {
+        icSplash.setOnClickListener {
             viewModel.onButtonClick()
         }
     }
