@@ -12,6 +12,9 @@ import com.app.features.home.databinding.ActivityHomeBinding
 import com.app.features.home.home.domain.models.Movie
 import com.app.features.home.home.domain.models.PopularMovies
 import com.app.features.home.home.presentation.adapter.HomeAdapter
+import com.app.features.home.home.presentation.adapter.MoviesListAdapter
+import com.app.features.home.nowPlaying.presentation.NowPlayingFragment
+import com.app.features.home.upcoming.presentation.UpcomingFragment
 import com.example.navigation.LoginNavigator
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -32,6 +35,7 @@ class HomeActivity : AppCompatActivity() {
         setButton()
         actionObserver()
         hideStatusBar()
+        setAdapter()
         setTab()
     }
 
@@ -72,19 +76,23 @@ class HomeActivity : AppCompatActivity() {
             viewModel.getPopularMovies()
         }
     }
+    private fun setAdapter() {
+        val adapter = MoviesListAdapter(supportFragmentManager, lifecycle)
+        adapter.addFragment(NowPlayingFragment())
+        adapter.addFragment(UpcomingFragment())
+        adapter.addFragment(NowPlayingFragment())
+        adapter.addFragment(NowPlayingFragment())
+        binding.viewPager.adapter = adapter
+
+    }
     private fun setTab() = with(binding) {
-        val tabList = listOf("Now playing","Upcoming","Top rated","Popular",)
-        tabLayout.apply {
-            tabGravity = TabLayout.GRAVITY_FILL
-            TabLayoutMediator(tabLayout, viewPager){tab, position ->
-                tab.text = tabList[position]
-            }.attach()
-            addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
-                override fun onTabSelected(tab: TabLayout.Tab?) {}
-                override fun onTabUnselected(tab: TabLayout.Tab?) {}
-                override fun onTabReselected(tab: TabLayout.Tab?) {}
-            })
-        }
+        val tabList = listOf("Now playing",
+            "Upcoming",
+            "Top rated",
+            "Popular")
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text = tabList[position]
+        }.attach()
     }
 
     private fun hideStatusBar() {
