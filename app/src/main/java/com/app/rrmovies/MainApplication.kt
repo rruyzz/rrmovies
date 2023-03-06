@@ -1,10 +1,11 @@
 package com.app.rrmovies
 
 import android.app.Application
-import com.app.features.home.data.repository.HomeRepository
+import com.app.features.home.data.mapper.TopMoviesMapper
+import com.app.features.home.domain.repository.HomeRepository
 import com.app.features.home.data.repository.HomeRepositoryImpl
 import com.app.features.home.data.service.HomeService
-import com.app.features.home.domain.HomeUseCase
+import com.app.features.home.domain.usecase.HomeUseCase
 import com.app.features.home.navigation.HomeNavigatorImpl
 import com.app.features.home.presentation.HomeViewModel
 import com.app.features.login.data.google.LoginGoogle
@@ -39,7 +40,7 @@ class MainApplication : Application() {
     }
     private val repositoryModule = module {
         single<LoginRepository> { LoginGoogle() }
-        single<HomeRepository> { HomeRepositoryImpl(get()) }
+        single<HomeRepository> { HomeRepositoryImpl(get(), TopMoviesMapper()) }
     }
     private val loginModule = module {
         viewModel { LoginViewModel(loginUseCase = LoginUseCase(repository = get())) }

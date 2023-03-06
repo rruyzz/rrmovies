@@ -5,8 +5,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.features.home.databinding.ActivityHomeBinding
+import com.app.features.home.domain.models.Movie
+import com.app.features.home.domain.models.TopMovies
+import com.app.features.home.presentation.adapter.HomeAdapter
 import com.example.navigation.LoginNavigator
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -20,14 +27,53 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        viewModel.getMovies()
         setButton()
+        actionObserver()
         hideStatusBar()
     }
 
+    private fun actionObserver() = lifecycleScope.launch {
+        viewModel.movieState.collect { state ->
+            when (state) {
+                is HomeState.Loading -> {
+                    renderLoading(state.isLoading)
+                }
+                is HomeState.Success ->{
+                    renderSuccess(state.success)
+                }
+                is HomeState.Error -> {
+                    renderError(state.error)
+                }
+            }
+        }
+    }
+
+    private fun renderError(error: String) {
+        binding.textView.text = error
+    }
+    private fun renderSuccess(list: TopMovies) {
+        binding.moviesList.apply {
+            adapter = homeAdapter(list)
+            layoutManager = linearLayoutManeger()
+        }
+    }
+
+    private fun homeAdapter(list: TopMovies) = HomeAdapter(::onClick, list, this)
+    private fun linearLayoutManeger() =
+        LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
+    private fun renderLoading(isLoading: Boolean) {
+        binding.progress.isVisible = isLoading
+    }
+
+    private fun onClick(movie: Movie) {
+    }
+
     private fun setButton() {
-//        binding.textView.setOnClickListener {
-//            viewModel.getMovies()
-//        }
+        binding.textView.setOnClickListener {
+            viewModel.getMovies()
+        }
     }
 
     private fun hideStatusBar() {
