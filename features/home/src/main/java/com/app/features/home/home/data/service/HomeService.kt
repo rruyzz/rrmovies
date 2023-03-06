@@ -10,5 +10,5 @@ interface HomeService {
     suspend fun getPopularMovies() : Response<PopularMoviesResponse>
 
     @GET("movie/now_playing")
-    suspend fun getNowMovies() : Response<PopularMoviesResponse>
+    suspend fun getNowPlayingMovies() : Response<PopularMoviesResponse>
 }

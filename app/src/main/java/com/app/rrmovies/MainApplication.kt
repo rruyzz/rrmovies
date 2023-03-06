@@ -1,6 +1,7 @@
 package com.app.rrmovies
 
 import android.app.Application
+import com.app.features.home.home.data.mapper.MoviesMapper
 import com.app.features.home.home.data.mapper.PopularMoviesMapper
 import com.app.features.home.home.domain.repository.HomeRepository
 import com.app.features.home.home.data.repository.HomeRepositoryImpl
@@ -8,6 +9,8 @@ import com.app.features.home.home.data.service.HomeService
 import com.app.features.home.home.domain.usecase.HomeUseCase
 import com.app.features.home.navigation.HomeNavigatorImpl
 import com.app.features.home.home.presentation.HomeViewModel
+import com.app.features.home.nowPlaying.domain.useCase.NowPlayingUseCase
+import com.app.features.home.nowPlaying.presentation.NowPlayingViewModel
 import com.app.features.login.data.google.LoginGoogle
 import com.app.features.login.data.repository.LoginRepository
 import com.app.features.login.domain.LoginUseCase
@@ -40,11 +43,12 @@ class MainApplication : Application() {
     }
     private val repositoryModule = module {
         single<LoginRepository> { LoginGoogle() }
-        single<HomeRepository> { HomeRepositoryImpl(get(), PopularMoviesMapper()) }
+        single<HomeRepository> { HomeRepositoryImpl(get(), PopularMoviesMapper(), MoviesMapper()) }
     }
     private val loginModule = module {
         viewModel { LoginViewModel(loginUseCase = LoginUseCase(repository = get())) }
         viewModel { HomeViewModel(popularMoviesUseCase = HomeUseCase(repository = get())) }
+        viewModel { NowPlayingViewModel(nowPlayingUseCase = NowPlayingUseCase(repository = get())) }
     }
     private val retrofitModule = module{
         single { createHttpClient() }

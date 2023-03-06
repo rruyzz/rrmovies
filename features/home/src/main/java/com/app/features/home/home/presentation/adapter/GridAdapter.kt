@@ -6,20 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.app.features.home.databinding.ItemMovieBinding
+import com.app.features.home.databinding.ItemPosterBinding
 import com.app.features.home.home.domain.models.Movie
 import com.app.features.home.home.domain.models.PopularMovies
 import com.bumptech.glide.Glide
 
-class HomeAdapter(
-    var onClick: (Movie) -> Unit,
+class GridAdapter(
     private val popularMovies: PopularMovies,
-    private val context: Context
-) : RecyclerView.Adapter<HomeAdapter.ListViewHolder>() {
+    private val context: Context,
+    var onClick: (Movie) -> Unit,
+) : RecyclerView.Adapter<GridAdapter.GridViewHolder>() {
 
-    lateinit var binding: ItemMovieBinding
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        binding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ListViewHolder(binding.root)
+    lateinit var binding: ItemPosterBinding
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GridViewHolder {
+        binding = ItemPosterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return GridViewHolder(binding.root)
     }
 
     override fun getItemCount() = popularMovies.movies.size
@@ -28,14 +29,14 @@ class HomeAdapter(
 
     override fun getItemViewType(position: Int) = position
 
-    override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        holder.bind(popularMovies.movies[position], popularMovies.iconList[position])
+    override fun onBindViewHolder(holder: GridViewHolder, position: Int) {
+        holder.bind(popularMovies.movies[position])
     }
 
-    inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(movie: Movie, icon: Int) = with(binding) {
-            Glide.with(context).load("https://image.tmdb.org/t/p/w500${movie.poster}").into(imagePoster)
-            position.setImageResource(icon)
+    inner class GridViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bind(movie: Movie) = with(binding) {
+            Glide.with(context).load("https://image.tmdb.org/t/p/w500${movie.poster}")
+                .into(imagePoster)
         }
 
         init {

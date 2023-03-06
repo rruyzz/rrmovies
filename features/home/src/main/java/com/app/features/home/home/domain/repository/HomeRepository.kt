@@ -6,5 +6,6 @@ import kotlinx.coroutines.flow.Flow
 interface HomeRepository {
 
     fun getPopularMovies(): Flow<PopularMovies>
+    fun getNowPlayingMovies(): Flow<PopularMovies>
 
 }
