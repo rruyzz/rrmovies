@@ -1,8 +1,8 @@
-package com.app.features.home.data.mapper
+package com.app.features.home.home.data.mapper
 
-import com.app.features.home.data.model.PopularMoviesResponse
-import com.app.features.home.domain.models.Movie
-import com.app.features.home.domain.models.PopularMovies
+import com.app.features.home.home.data.model.PopularMoviesResponse
+import com.app.features.home.home.domain.models.Movie
+import com.app.features.home.home.domain.models.PopularMovies
 
 class PopularMoviesMapper {
     operator fun invoke(response: PopularMoviesResponse?

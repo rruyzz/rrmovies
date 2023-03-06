@@ -2,7 +2,7 @@ package com.app.features.home.navigation
 
 import android.content.Context
 import android.content.Intent
-import com.app.features.home.presentation.HomeActivity
+import com.app.features.home.home.presentation.HomeActivity
 import com.example.navigation.HomeNavigator
 
 class HomeNavigatorImpl : HomeNavigator {

@@ -1,4 +1,4 @@
-package com.app.features.home.domain.models
+package com.app.features.home.home.domain.models
 
 import com.app.features.home.R
 

@@ -1,13 +1,13 @@
 package com.app.rrmovies
 
 import android.app.Application
-import com.app.features.home.data.mapper.PopularMoviesMapper
-import com.app.features.home.domain.repository.HomeRepository
-import com.app.features.home.data.repository.HomeRepositoryImpl
-import com.app.features.home.data.service.HomeService
-import com.app.features.home.domain.usecase.HomeUseCase
+import com.app.features.home.home.data.mapper.PopularMoviesMapper
+import com.app.features.home.home.domain.repository.HomeRepository
+import com.app.features.home.home.data.repository.HomeRepositoryImpl
+import com.app.features.home.home.data.service.HomeService
+import com.app.features.home.home.domain.usecase.HomeUseCase
 import com.app.features.home.navigation.HomeNavigatorImpl
-import com.app.features.home.presentation.HomeViewModel
+import com.app.features.home.home.presentation.HomeViewModel
 import com.app.features.login.data.google.LoginGoogle
 import com.app.features.login.data.repository.LoginRepository
 import com.app.features.login.domain.LoginUseCase

@@ -1,9 +1,9 @@
-package com.app.features.home.data.repository
+package com.app.features.home.home.data.repository
 
-import com.app.features.home.data.mapper.PopularMoviesMapper
-import com.app.features.home.data.service.HomeService
-import com.app.features.home.domain.models.PopularMovies
-import com.app.features.home.domain.repository.HomeRepository
+import com.app.features.home.home.data.mapper.PopularMoviesMapper
+import com.app.features.home.home.data.service.HomeService
+import com.app.features.home.home.domain.models.PopularMovies
+import com.app.features.home.home.domain.repository.HomeRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

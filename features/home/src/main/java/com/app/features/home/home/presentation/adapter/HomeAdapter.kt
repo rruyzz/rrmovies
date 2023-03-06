@@ -1,4 +1,4 @@
-package com.app.features.home.presentation.adapter
+package com.app.features.home.home.presentation.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.app.features.home.databinding.ItemMovieBinding
-import com.app.features.home.domain.models.Movie
-import com.app.features.home.domain.models.PopularMovies
+import com.app.features.home.home.domain.models.Movie
+import com.app.features.home.home.domain.models.PopularMovies
 import com.bumptech.glide.Glide
 
 class HomeAdapter(

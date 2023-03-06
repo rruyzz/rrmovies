@@ -1,6 +1,6 @@
-package com.app.features.home.domain.repository
+package com.app.features.home.home.domain.repository
 
-import com.app.features.home.domain.models.PopularMovies
+import com.app.features.home.home.domain.models.PopularMovies
 import kotlinx.coroutines.flow.Flow
 
 interface HomeRepository {

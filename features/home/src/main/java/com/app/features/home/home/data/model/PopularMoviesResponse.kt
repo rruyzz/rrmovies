@@ -1,4 +1,4 @@
-package com.app.features.home.data.model
+package com.app.features.home.home.data.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

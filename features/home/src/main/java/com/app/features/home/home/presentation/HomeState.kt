@@ -1,6 +1,6 @@
-package com.app.features.home.presentation
+package com.app.features.home.home.presentation
 
-import com.app.features.home.domain.models.PopularMovies
+import com.app.features.home.home.domain.models.PopularMovies
 
 sealed class HomeState {
     data class Loading(val isLoading: Boolean) : HomeState()
