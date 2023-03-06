@@ -11,6 +11,8 @@ import com.app.features.home.navigation.HomeNavigatorImpl
 import com.app.features.home.home.presentation.HomeViewModel
 import com.app.features.home.nowPlaying.domain.useCase.NowPlayingUseCase
 import com.app.features.home.nowPlaying.presentation.NowPlayingViewModel
+import com.app.features.home.upcoming.domain.UpcomingUseCase
+import com.app.features.home.upcoming.presentation.UpcomingViewModel
 import com.app.features.login.data.google.LoginGoogle
 import com.app.features.login.data.repository.LoginRepository
 import com.app.features.login.domain.LoginUseCase
@@ -49,6 +51,7 @@ class MainApplication : Application() {
         viewModel { LoginViewModel(loginUseCase = LoginUseCase(repository = get())) }
         viewModel { HomeViewModel(popularMoviesUseCase = HomeUseCase(repository = get())) }
         viewModel { NowPlayingViewModel(nowPlayingUseCase = NowPlayingUseCase(repository = get())) }
+        viewModel { UpcomingViewModel(upcomingUseCase = UpcomingUseCase(repository = get())) }
     }
     private val retrofitModule = module{
         single { createHttpClient() }
