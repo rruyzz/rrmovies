@@ -10,7 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.features.home.databinding.ActivityHomeBinding
 import com.app.features.home.domain.models.Movie
-import com.app.features.home.domain.models.TopMovies
+import com.app.features.home.domain.models.PopularMovies
 import com.app.features.home.presentation.adapter.HomeAdapter
 import com.example.navigation.LoginNavigator
 import kotlinx.coroutines.launch
@@ -27,20 +27,20 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        viewModel.getMovies()
+        viewModel.getPopularMovies()
         setButton()
         actionObserver()
         hideStatusBar()
     }
 
     private fun actionObserver() = lifecycleScope.launch {
-        viewModel.movieState.collect { state ->
+        viewModel.popularMoviesState.collect { state ->
             when (state) {
                 is HomeState.Loading -> {
                     renderLoading(state.isLoading)
                 }
                 is HomeState.Success ->{
-                    renderSuccess(state.success)
+                    renderSuccess(state.popularMovies)
                 }
                 is HomeState.Error -> {
                     renderError(state.error)
@@ -52,14 +52,14 @@ class HomeActivity : AppCompatActivity() {
     private fun renderError(error: String) {
         binding.textView.text = error
     }
-    private fun renderSuccess(list: TopMovies) {
+    private fun renderSuccess(list: PopularMovies) {
         binding.moviesList.apply {
             adapter = homeAdapter(list)
             layoutManager = linearLayoutManeger()
         }
     }
 
-    private fun homeAdapter(list: TopMovies) = HomeAdapter(::onClick, list, this)
+    private fun homeAdapter(list: PopularMovies) = HomeAdapter(::onClick, list, this)
     private fun linearLayoutManeger() =
         LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
@@ -72,7 +72,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setButton() {
         binding.textView.setOnClickListener {
-            viewModel.getMovies()
+            viewModel.getPopularMovies()
         }
     }
 

@@ -8,24 +8,24 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val homeUseCase: HomeUseCase
+    private val popularMoviesUseCase: HomeUseCase
 ) : ViewModel() {
 
-    private val _moviesState = MutableSharedFlow<HomeState>(0)
-    val movieState = _moviesState.asSharedFlow()
+    private val _popularMoviesState = MutableSharedFlow<HomeState>(0)
+    val popularMoviesState = _popularMoviesState.asSharedFlow()
 
-    fun getMovies() = viewModelScope.launch(Dispatchers.IO) {
-        homeUseCase()
+    fun getPopularMovies() = viewModelScope.launch(Dispatchers.IO) {
+        popularMoviesUseCase()
             .flowOn(Dispatchers.IO)
-            .onStart { _moviesState.emit(HomeState.Loading(true)) }
+            .onStart { _popularMoviesState.emit(HomeState.Loading(true)) }
             .onCompletion {
-                _moviesState.emit(HomeState.Loading(false))
+                _popularMoviesState.emit(HomeState.Loading(false))
             }
             .catch {
-                _moviesState.emit(HomeState.Error(it.message.orEmpty()))
+                _popularMoviesState.emit(HomeState.Error(it.message.orEmpty()))
             }
             .collect {
-                _moviesState.emit(HomeState.Success(it))
+                _popularMoviesState.emit(HomeState.Success(it))
             }
     }
 }

@@ -1,9 +1,8 @@
 package com.app.features.home.domain.models
 
-import androidx.annotation.DrawableRes
 import com.app.features.home.R
 
-data class TopMovies (
+data class PopularMovies (
     val movies: List<Movie>,
     val iconList: List<Int> = iconListDrawable
 )

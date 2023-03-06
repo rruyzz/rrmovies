@@ -1,7 +1,7 @@
 package com.app.rrmovies
 
 import android.app.Application
-import com.app.features.home.data.mapper.TopMoviesMapper
+import com.app.features.home.data.mapper.PopularMoviesMapper
 import com.app.features.home.domain.repository.HomeRepository
 import com.app.features.home.data.repository.HomeRepositoryImpl
 import com.app.features.home.data.service.HomeService
@@ -40,11 +40,11 @@ class MainApplication : Application() {
     }
     private val repositoryModule = module {
         single<LoginRepository> { LoginGoogle() }
-        single<HomeRepository> { HomeRepositoryImpl(get(), TopMoviesMapper()) }
+        single<HomeRepository> { HomeRepositoryImpl(get(), PopularMoviesMapper()) }
     }
     private val loginModule = module {
         viewModel { LoginViewModel(loginUseCase = LoginUseCase(repository = get())) }
-        viewModel { HomeViewModel(homeUseCase = HomeUseCase(repository = get())) }
+        viewModel { HomeViewModel(popularMoviesUseCase = HomeUseCase(repository = get())) }
     }
     private val retrofitModule = module{
         single { createHttpClient() }
