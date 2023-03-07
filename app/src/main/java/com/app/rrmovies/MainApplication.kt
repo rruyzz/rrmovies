@@ -1,6 +1,7 @@
 package com.app.rrmovies
 
 import android.app.Application
+import com.app.detail.navigation.DetailNavigatorImpl
 import com.app.features.home.home.data.mapper.MoviesMapper
 import com.app.features.home.home.data.mapper.PopularMoviesMapper
 import com.app.features.home.home.domain.repository.HomeRepository
@@ -25,6 +26,7 @@ import com.app.features.login.navigation.LoginNavigatorImpl
 import com.app.features.login.presentation.LoginViewModel
 import com.app.network.utils.createHttpClient
 import com.app.network.utils.retrofitClient
+import com.example.navigation.DetailNavigator
 import com.example.navigation.HomeNavigator
 import com.example.navigation.LoginNavigator
 import org.koin.android.ext.koin.androidContext
@@ -47,6 +49,7 @@ class MainApplication : Application() {
     private val navigationModule = module {
         single<LoginNavigator> { LoginNavigatorImpl() }
         single<HomeNavigator> { HomeNavigatorImpl() }
+        single<DetailNavigator> { DetailNavigatorImpl() }
     }
     private val repositoryModule = module {
         single<LoginRepository> { LoginGoogle() }

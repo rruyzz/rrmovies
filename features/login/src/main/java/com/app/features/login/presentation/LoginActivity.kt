@@ -8,6 +8,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.app.commons.utils.hideStatusBar
 import com.app.features.login.databinding.ActivityLoginBinding
 import com.example.navigation.HomeNavigator
 import kotlinx.coroutines.CoroutineScope
@@ -27,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        hideStatusBar()
+        hideStatusBar(window)
         setButton()
         actionObserver()
     }
@@ -49,15 +50,6 @@ class LoginActivity : AppCompatActivity() {
         homeNavigator.navigate(this)
     }
 
-    private fun hideStatusBar() {
-        with(window) {
-            decorView.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-            attributes.flags =
-                window.attributes.flags and WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS.inv()
-            statusBarColor = Color.TRANSPARENT
-        }
-    }
 }
 
 //https://proandroiddev.com/supercharge-android-mvvm-part-1-viewstate-and-actionstate-5816500580ed
