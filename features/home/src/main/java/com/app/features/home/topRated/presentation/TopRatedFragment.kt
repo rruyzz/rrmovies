@@ -1,11 +1,11 @@
-package com.app.features.home.upcoming.presentation
+package com.app.features.home.topRated.presentation
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.app.features.home.databinding.FragmentGridRecyclerLayoutBinding
@@ -16,10 +16,9 @@ import com.app.features.home.home.presentation.adapter.GridAdapter
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
-class UpcomingFragment : Fragment() {
+class TopRatedFragment : Fragment() {
     private lateinit var binding: FragmentGridRecyclerLayoutBinding
-    private val viewModel: UpcomingViewModel by viewModel()
+    private val viewModel: TopRatedViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,15 +34,15 @@ class UpcomingFragment : Fragment() {
     }
 
     private fun actionObserver() = lifecycleScope.launch {
-        viewModel.upcomingMoviesState.collect { state ->
+        viewModel.topRatedMoviesState.collect { state ->
             when (state) {
-                is UpcomingState.Loading -> {
+                is TopRatedState.Loading -> {
                     renderLoading(state.isLoading)
                 }
-                is UpcomingState.Success -> {
+                is TopRatedState.Success -> {
                     renderSuccess(state.popularMovies)
                 }
-                is UpcomingState.Error -> {
+                is TopRatedState.Error -> {
                     renderError(state.error)
                 }
             }

@@ -14,5 +14,7 @@ interface HomeService {
 
     @GET("movie/upcoming")
     suspend fun getUpcomingMovies() : Response<PopularMoviesResponse>
+    @GET("movie/top_rated")
+    suspend fun getTopRatedMovies() : Response<PopularMoviesResponse>
 
 }

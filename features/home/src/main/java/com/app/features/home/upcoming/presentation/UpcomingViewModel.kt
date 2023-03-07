@@ -12,26 +12,25 @@ class UpcomingViewModel(
     private val upcomingUseCase: UpcomingUseCase
 ) : ViewModel() {
 
-    private val _upcomingMoviesState = MutableSharedFlow<HomeState>(0)
+    private val _upcomingMoviesState = MutableSharedFlow<UpcomingState>(0)
     val upcomingMoviesState = _upcomingMoviesState.asSharedFlow()
 
-
     init {
-        getPopularMovies()
+        getUpcomingMovies()
     }
 
-    fun getPopularMovies() = viewModelScope.launch(Dispatchers.IO) {
+    fun getUpcomingMovies() = viewModelScope.launch(Dispatchers.IO) {
         upcomingUseCase()
             .flowOn(Dispatchers.IO)
-            .onStart { _upcomingMoviesState.emit(HomeState.Loading(true)) }
+            .onStart { _upcomingMoviesState.emit(UpcomingState.Loading(true)) }
             .onCompletion {
-                _upcomingMoviesState.emit(HomeState.Loading(false))
+                _upcomingMoviesState.emit(UpcomingState.Loading(false))
             }
             .catch {
-                _upcomingMoviesState.emit(HomeState.Error(it.message.orEmpty()))
+                _upcomingMoviesState.emit(UpcomingState.Error(it.message.orEmpty()))
             }
             .collect {
-                _upcomingMoviesState.emit(HomeState.Success(it))
+                _upcomingMoviesState.emit(UpcomingState.Success(it))
             }
     }
 }

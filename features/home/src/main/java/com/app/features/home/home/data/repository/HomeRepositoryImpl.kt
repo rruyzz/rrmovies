@@ -31,4 +31,10 @@ class HomeRepositoryImpl(
             emit(moviesMapper(service.getUpcomingMovies().body()))
         }
     }
+
+    override fun getTopRatedMovies(): Flow<PopularMovies> {
+        return flow {
+            emit(moviesMapper(service.getTopRatedMovies().body()))
+        }
+    }
 }
