@@ -9,5 +9,6 @@ interface HomeRepository {
     fun getNowPlayingMovies(): Flow<PopularMovies>
     fun getUpcomingMovies(): Flow<PopularMovies>
     fun getTopRatedMovies(): Flow<PopularMovies>
+    fun getTopRatedMoviesComplete(): Flow<PopularMovies>
 
 }

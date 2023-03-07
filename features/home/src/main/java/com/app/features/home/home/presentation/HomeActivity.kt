@@ -14,6 +14,7 @@ import com.app.features.home.home.domain.models.PopularMovies
 import com.app.features.home.home.presentation.adapter.HomeAdapter
 import com.app.features.home.home.presentation.adapter.MoviesListAdapter
 import com.app.features.home.nowPlaying.presentation.NowPlayingFragment
+import com.app.features.home.popularMovies.presentation.PopularMoviesFragment
 import com.app.features.home.topRated.presentation.TopRatedFragment
 import com.app.features.home.upcoming.presentation.UpcomingFragment
 import com.example.navigation.LoginNavigator
@@ -82,7 +83,7 @@ class HomeActivity : AppCompatActivity() {
         adapter.addFragment(NowPlayingFragment())
         adapter.addFragment(UpcomingFragment())
         adapter.addFragment(TopRatedFragment())
-        adapter.addFragment(NowPlayingFragment())
+        adapter.addFragment(PopularMoviesFragment())
         binding.viewPager.adapter = adapter
 
     }
