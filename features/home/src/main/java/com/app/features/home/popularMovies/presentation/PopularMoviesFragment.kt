@@ -8,8 +8,8 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import com.app.commons.models.Movie
 import com.app.features.home.databinding.FragmentGridRecyclerLayoutBinding
-import com.app.features.home.home.domain.models.Movie
 import com.app.features.home.home.domain.models.PopularMovies
 import com.app.features.home.home.presentation.adapter.GridAdapter
 import kotlinx.coroutines.launch

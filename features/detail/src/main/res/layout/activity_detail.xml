@@ -12,9 +12,40 @@
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:toolbar_title="Teste"
-        app:toolbar_icon="@drawable/ic_saved"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:toolbar_icon="@drawable/ic_saved"
+        app:toolbar_title="Teste" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imagePosterBackgroundCard"
+        android:layout_width="0dp"
+        android:layout_height="234dp"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:srcCompat="@drawable/image_superbad"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.SelectedCornerRadius" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="104dp"
+        android:layout_height="156dp"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imagePosterBackgroundCard"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imagePosterBackgroundCard">
+
+        <ImageView
+            android:id="@+id/imagePoster"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/image_superbad" />
+
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

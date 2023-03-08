@@ -5,9 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.app.features.home.databinding.ItemMovieBinding
+import com.app.commons.models.Movie
 import com.app.features.home.databinding.ItemPosterBinding
-import com.app.features.home.home.domain.models.Movie
 import com.app.features.home.home.domain.models.PopularMovies
 import com.bumptech.glide.Glide
 

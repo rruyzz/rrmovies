@@ -1,5 +1,6 @@
 package com.app.features.home.home.domain.models
 
+import com.app.commons.models.Movie
 import com.app.features.home.R
 
 data class PopularMovies (
@@ -7,9 +8,6 @@ data class PopularMovies (
     val iconList: List<Int> = iconListDrawable
 )
 
-data class Movie (
-    val poster: String
-)
 private val iconListDrawable  = listOf(
     R.drawable.ic_first_position,
     R.drawable.ic_second_position,

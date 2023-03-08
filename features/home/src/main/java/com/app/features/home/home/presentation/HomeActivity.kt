@@ -10,7 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.commons.utils.hideStatusBar
 import com.app.features.home.databinding.ActivityHomeBinding
-import com.app.features.home.home.domain.models.Movie
+import com.app.commons.models.Movie
 import com.app.features.home.home.domain.models.PopularMovies
 import com.app.features.home.home.presentation.adapter.HomeAdapter
 import com.app.features.home.home.presentation.adapter.MoviesListAdapter
@@ -19,8 +19,6 @@ import com.app.features.home.popularMovies.presentation.PopularMoviesFragment
 import com.app.features.home.topRated.presentation.TopRatedFragment
 import com.app.features.home.upcoming.presentation.UpcomingFragment
 import com.example.navigation.DetailNavigator
-import com.example.navigation.LoginNavigator
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -73,7 +71,7 @@ class HomeActivity : AppCompatActivity() {
         binding.progress.isVisible = isLoading
     }
     private fun onClick(movie: Movie) {
-        detailNavigator.navigate(this)
+        detailNavigator.navigate(this, movie)
     }
 
     private fun setButton() {

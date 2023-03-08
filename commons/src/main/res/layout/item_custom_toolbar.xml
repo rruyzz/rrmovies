@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/icon_back"
         android:layout_margin="16dp"
+        android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
