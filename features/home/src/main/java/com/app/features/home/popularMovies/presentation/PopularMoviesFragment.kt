@@ -12,12 +12,16 @@ import com.app.commons.models.Movie
 import com.app.features.home.databinding.FragmentGridRecyclerLayoutBinding
 import com.app.features.home.home.domain.models.PopularMovies
 import com.app.features.home.home.presentation.adapter.GridAdapter
+import com.example.navigation.DetailNavigator
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PopularMoviesFragment : Fragment() {
+
     private lateinit var binding: FragmentGridRecyclerLayoutBinding
     private val viewModel: PopularMoviesViewModel by viewModel()
+    private val detailNavigator: DetailNavigator by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,6 +62,7 @@ class PopularMoviesFragment : Fragment() {
 
     }
     private fun onClick(movie: Movie) {
+        detailNavigator.navigate(requireContext(), movie)
     }
     private fun renderLoading(isLoading: Boolean) {
         binding.progress.isVisible = isLoading

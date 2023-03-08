@@ -29,7 +29,7 @@ class DetailActivity : AppCompatActivity() {
             finish()
         }
         binding.textYear.text = movie?.year.orEmpty()
-        binding.textTime.text = movie?.time.orEmpty()
+        binding.textTime.text = movie?.time.orEmpty() + " Minutes"
         binding.textGener.text = movie?.gener.orEmpty()
     }
 }
