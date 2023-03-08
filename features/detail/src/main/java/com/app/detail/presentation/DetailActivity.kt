@@ -7,7 +7,9 @@ import com.app.commons.utils.hideStatusBar
 import com.app.commons.utils.parcelable
 import com.app.detail.R
 import com.app.detail.databinding.ActivityDetailBinding
+import com.app.detail.description.presentation.DescriptionFragment
 import com.bumptech.glide.Glide
+import com.google.android.material.tabs.TabLayoutMediator
 
 class DetailActivity : AppCompatActivity() {
 
@@ -31,5 +33,24 @@ class DetailActivity : AppCompatActivity() {
         binding.textYear.text = movie?.year.orEmpty()
         binding.textTime.text = movie?.time.orEmpty() + " Minutes"
         binding.textGener.text = movie?.gener.orEmpty()
+        setAdapter(movie?.description.orEmpty())
+        setTab()
+    }
+
+    private fun setAdapter(description: String) {
+        val adapter = DetailMovieAdapter(supportFragmentManager, lifecycle)
+        adapter.addFragment(DescriptionFragment(description))
+        adapter.addFragment(DescriptionFragment(description))
+        adapter.addFragment(DescriptionFragment(description))
+        binding.viewPager.adapter = adapter
+
+    }
+    private fun setTab() = with(binding) {
+        val tabList = listOf("About Movie",
+            "Reviews",
+            "Cast")
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text = tabList[position]
+        }.attach()
     }
 }

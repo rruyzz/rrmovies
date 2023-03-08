@@ -17,4 +17,8 @@
         <item name="cornerSizeBottomRight">16dp</item>
         <item name="cornerFamilyTopRight">rounded</item>
     </style>
+
+    <style name="tab_text" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:fontFamily">@font/poppins_medium</item>
+    </style>
 </resources>
