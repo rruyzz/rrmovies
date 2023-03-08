@@ -7,4 +7,9 @@ import android.os.Parcelable
 data class Movie (
     val poster: String,
     val posterBack: String,
+    val title: String,
+    val description: String,
+    val year: String,
+    val time: String,
+    val gener: String,
 ) : Parcelable

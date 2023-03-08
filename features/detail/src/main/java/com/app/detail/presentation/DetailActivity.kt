@@ -23,9 +23,13 @@ class DetailActivity : AppCompatActivity() {
             .into(binding.imagePosterBackgroundCard)
         Glide.with(this).load("https://image.tmdb.org/t/p/w500${movie?.poster}")
             .into(binding.imagePoster)
+        binding.titleMovie.text = movie?.title.orEmpty()
         binding.imagePosterBackgroundCard.setBackgroundResource(R.drawable.background_poster)
         binding.toolbar.setOnClickListener {
             finish()
         }
+        binding.textYear.text = movie?.year.orEmpty()
+        binding.textTime.text = movie?.time.orEmpty()
+        binding.textGener.text = movie?.gener.orEmpty()
     }
 }
