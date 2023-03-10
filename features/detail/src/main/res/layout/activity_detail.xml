@@ -102,30 +102,6 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:src="@drawable/ic_clock"
-            android:layout_marginStart="12dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:id="@+id/textTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_regular"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/light_gray"
-            android:text="140 Minutes"/>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="12dp"
-            android:background="@color/light_gray"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/navigationBar"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatImageView
             android:src="@drawable/ic_ticket"
             android:layout_marginStart="12dp"
             android:layout_width="wrap_content"

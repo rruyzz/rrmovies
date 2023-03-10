@@ -12,11 +12,11 @@ const val WRITE_TIMEOUT = 15L
 const val READ_TIMEOUT = 15L
 
 var clientInterceptor = Interceptor { chain ->
-    var request = chain.request()
+    val request = chain.request()
     val url = request.url.newBuilder()
         .addQueryParameter("api_key", "e591023d8d396231d3045ea6341a6fd2")
         .addQueryParameter("language", "pt-BR").build()
-    request = request.newBuilder().url(url).build()
+//    request = request.newBuilder().url(url).build()
     chain.proceed(request)
 }
 
