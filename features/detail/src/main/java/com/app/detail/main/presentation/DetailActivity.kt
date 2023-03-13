@@ -1,4 +1,4 @@
-package com.app.detail.presentation
+package com.app.detail.main.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,8 +6,10 @@ import com.app.commons.models.Movie
 import com.app.commons.utils.hideStatusBar
 import com.app.commons.utils.parcelable
 import com.app.detail.R
+import com.app.detail.cast.presentation.CastFragment
 import com.app.detail.databinding.ActivityDetailBinding
 import com.app.detail.description.presentation.DescriptionFragment
+import com.app.detail.reviews.presentation.ReviewsFragment
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -31,24 +33,25 @@ class DetailActivity : AppCompatActivity() {
             finish()
         }
         binding.textYear.text = movie?.year.orEmpty()
-        binding.textTime.text = movie?.time.orEmpty() + " Minutes"
         binding.textGener.text = movie?.gener.orEmpty()
-        setAdapter(movie?.description.orEmpty())
+        setAdapter(movie?.description.orEmpty(), movie?.id.orEmpty())
         setTab()
     }
 
-    private fun setAdapter(description: String) {
+    private fun setAdapter(description: String, movieId: String) {
         val adapter = DetailMovieAdapter(supportFragmentManager, lifecycle)
+        adapter.addFragment(CastFragment(movieId))
         adapter.addFragment(DescriptionFragment(description))
-        adapter.addFragment(DescriptionFragment(description))
-        adapter.addFragment(DescriptionFragment(description))
+        adapter.addFragment(ReviewsFragment())
         binding.viewPager.adapter = adapter
 
     }
     private fun setTab() = with(binding) {
-        val tabList = listOf("About Movie",
+        val tabList = listOf(
+            "Cast",
             "Reviews",
-            "Cast")
+            "About Movie"
+        )
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = tabList[position]
         }.attach()

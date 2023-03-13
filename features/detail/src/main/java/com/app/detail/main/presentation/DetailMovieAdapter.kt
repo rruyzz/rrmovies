@@ -1,4 +1,4 @@
-package com.app.detail.presentation
+package com.app.detail.main.presentation
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

@@ -10,6 +10,7 @@ class MoviesMapper {
     ) : PopularMovies {
         val fiveList = response?.results.orEmpty().subList(0,18).map {
             Movie(
+                id = it.id.toString(),
                 poster = it.posterPath,
                 posterBack = it.backdropPath,
                 title = it.titleMovie,

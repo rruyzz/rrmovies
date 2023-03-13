@@ -5,6 +5,7 @@ import android.os.Parcelable
 
 @Parcelize
 data class Movie (
+    val id: String,
     val poster: String,
     val posterBack: String,
     val title: String,
