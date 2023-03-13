@@ -40,17 +40,15 @@ class DetailActivity : AppCompatActivity() {
 
     private fun setAdapter(description: String, movieId: String) {
         val adapter = DetailMovieAdapter(supportFragmentManager, lifecycle)
-        adapter.addFragment(CastFragment(movieId))
         adapter.addFragment(DescriptionFragment(description))
-        adapter.addFragment(ReviewsFragment())
+        adapter.addFragment(CastFragment(movieId))
         binding.viewPager.adapter = adapter
 
     }
     private fun setTab() = with(binding) {
         val tabList = listOf(
+            "About Movie",
             "Cast",
-            "Reviews",
-            "About Movie"
         )
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = tabList[position]
