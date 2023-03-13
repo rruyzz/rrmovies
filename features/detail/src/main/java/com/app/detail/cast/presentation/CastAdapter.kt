@@ -35,6 +35,7 @@ class CastAdapter(
         fun bind(actor: Actor) = with(binding) {
             Glide.with(context).load("https://image.tmdb.org/t/p/w500${actor.image}")
                 .into(imagePoster)
+            textName.text = actor.name
         }
 
     }
