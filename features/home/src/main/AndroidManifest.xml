@@ -3,7 +3,7 @@
 
     <application>
         <activity
-            android:name=".home.presentation.HomeActivity"
+            android:name=".home.presentation.activity.MainActivity"
             android:exported="false" />
     </application>
 

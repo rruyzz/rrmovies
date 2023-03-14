@@ -16,6 +16,7 @@ import com.app.features.home.home.data.repository.HomeRepositoryImpl
 import com.app.features.home.home.data.service.HomeService
 import com.app.features.home.home.domain.usecase.HomeUseCase
 import com.app.features.home.home.domain.usecase.SearchUseCase
+import com.app.features.home.home.presentation.activity.MainViewModel
 import com.app.features.home.navigation.HomeNavigatorImpl
 import com.app.features.home.home.presentation.fragment.HomeViewModel
 import com.app.features.home.nowPlaying.domain.useCase.NowPlayingUseCase
@@ -71,6 +72,7 @@ class MainApplication : Application() {
         viewModel { TopRatedViewModel(topRatedUseCase = TopRatedUseCase(repository = get())) }
         viewModel { PopularMoviesViewModel(popularMoviesUseCase = PopularMoviesUseCase(repository = get())) }
         viewModel { CastViewModel(castUseCase = CastUseCase(repository = get())) }
+        viewModel { MainViewModel() }
     }
     private val retrofitModule = module{
         single { createHttpClient() }
