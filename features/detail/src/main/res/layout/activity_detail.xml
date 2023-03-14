@@ -8,16 +8,6 @@
     android:fitsSystemWindows="true"
     tools:context=".main.presentation.DetailActivity">
 
-    <com.app.commons.customView.CustomToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:toolbar_icon="@drawable/ic_saved"
-        app:toolbar_title="Teste" />
-
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"

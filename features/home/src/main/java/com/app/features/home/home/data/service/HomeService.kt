@@ -1,10 +1,9 @@
 package com.app.features.home.home.data.service
 
 import com.app.features.home.home.data.model.PopularMoviesResponse
-import com.app.features.home.home.data.model.SearchMoviesResponse
+import com.app.features.home.search.data.model.SearchMoviesResponse
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Query
 
 interface HomeService {
 

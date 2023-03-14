@@ -29,9 +29,6 @@ class DetailActivity : AppCompatActivity() {
             .into(binding.imagePoster)
         binding.titleMovie.text = movie?.title.orEmpty()
         binding.imagePosterBackgroundCard.setBackgroundResource(R.drawable.background_poster)
-        binding.toolbar.setOnClickListener {
-            finish()
-        }
         binding.textYear.text = movie?.year.orEmpty()
         binding.textGener.text = movie?.gener.orEmpty()
         setAdapter(movie?.description.orEmpty(), movie?.id.orEmpty())

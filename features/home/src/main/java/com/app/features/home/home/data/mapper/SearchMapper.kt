@@ -1,9 +1,8 @@
 package com.app.features.home.home.data.mapper
 
 import com.app.commons.models.Movie
-import com.app.features.home.home.data.model.PopularMoviesResponse
-import com.app.features.home.home.data.model.SearchMoviesResponse
 import com.app.features.home.home.domain.models.PopularMovies
+import com.app.features.home.search.data.model.SearchMoviesResponse
 
 class SearchMapper {
 

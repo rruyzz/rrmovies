@@ -15,7 +15,7 @@ import com.app.features.home.home.domain.repository.HomeRepository
 import com.app.features.home.home.data.repository.HomeRepositoryImpl
 import com.app.features.home.home.data.service.HomeService
 import com.app.features.home.home.domain.usecase.HomeUseCase
-import com.app.features.home.home.domain.usecase.SearchUseCase
+import com.app.features.home.search.domain.usecase.SearchUseCase
 import com.app.features.home.home.presentation.activity.MainViewModel
 import com.app.features.home.navigation.HomeNavigatorImpl
 import com.app.features.home.home.presentation.fragment.HomeViewModel

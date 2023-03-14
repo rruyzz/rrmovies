@@ -4,7 +4,8 @@
     <application>
         <activity
             android:name=".home.presentation.activity.MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>

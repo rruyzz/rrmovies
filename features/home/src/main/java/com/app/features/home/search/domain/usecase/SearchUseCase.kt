@@ -1,4 +1,4 @@
-package com.app.features.home.home.domain.usecase
+package com.app.features.home.search.domain.usecase
 
 import com.app.features.home.home.domain.models.PopularMovies
 import com.app.features.home.home.domain.repository.HomeRepository
