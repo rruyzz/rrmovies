@@ -2,7 +2,7 @@ package com.app.features.home.nowPlaying.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.app.features.home.home.presentation.HomeState
+import com.app.features.home.home.presentation.fragment.HomeState
 import com.app.features.home.nowPlaying.domain.useCase.NowPlayingUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*

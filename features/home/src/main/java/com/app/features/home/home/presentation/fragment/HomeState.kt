@@ -1,4 +1,4 @@
-package com.app.features.home.home.presentation
+package com.app.features.home.home.presentation.fragment
 
 import com.app.features.home.home.domain.models.PopularMovies
 

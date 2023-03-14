@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.app.commons.models.Movie
 import com.app.features.home.databinding.FragmentGridRecyclerLayoutBinding
 import com.app.features.home.home.domain.models.PopularMovies
-import com.app.features.home.home.presentation.HomeState
+import com.app.features.home.home.presentation.fragment.HomeState
 import com.app.features.home.home.presentation.adapter.GridAdapter
 import com.example.navigation.DetailNavigator
 import kotlinx.coroutines.launch

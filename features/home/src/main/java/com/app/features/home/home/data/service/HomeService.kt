@@ -1,8 +1,10 @@
 package com.app.features.home.home.data.service
 
 import com.app.features.home.home.data.model.PopularMoviesResponse
+import com.app.features.home.home.data.model.SearchMoviesResponse
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface HomeService {
 
@@ -16,5 +18,9 @@ interface HomeService {
     suspend fun getUpcomingMovies() : Response<PopularMoviesResponse>
     @GET("movie/top_rated")
     suspend fun getTopRatedMovies() : Response<PopularMoviesResponse>
+
+    @GET("search/multi")
+    suspend fun getSearchMovies(movieName: String) : Response<SearchMoviesResponse>
+
 
 }

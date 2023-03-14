@@ -10,12 +10,14 @@ import com.app.detail.main.domain.repository.DetailRepository
 import com.app.detail.navigation.DetailNavigatorImpl
 import com.app.features.home.home.data.mapper.MoviesMapper
 import com.app.features.home.home.data.mapper.PopularMoviesMapper
+import com.app.features.home.home.data.mapper.SearchMapper
 import com.app.features.home.home.domain.repository.HomeRepository
 import com.app.features.home.home.data.repository.HomeRepositoryImpl
 import com.app.features.home.home.data.service.HomeService
 import com.app.features.home.home.domain.usecase.HomeUseCase
+import com.app.features.home.home.domain.usecase.SearchUseCase
 import com.app.features.home.navigation.HomeNavigatorImpl
-import com.app.features.home.home.presentation.HomeViewModel
+import com.app.features.home.home.presentation.fragment.HomeViewModel
 import com.app.features.home.nowPlaying.domain.useCase.NowPlayingUseCase
 import com.app.features.home.nowPlaying.presentation.NowPlayingViewModel
 import com.app.features.home.popularMovies.domain.PopularMoviesUseCase
@@ -58,12 +60,12 @@ class MainApplication : Application() {
     }
     private val repositoryModule = module {
         single<LoginRepository> { LoginGoogle() }
-        single<HomeRepository> { HomeRepositoryImpl(get(), PopularMoviesMapper(), MoviesMapper()) }
+        single<HomeRepository> { HomeRepositoryImpl(get(), PopularMoviesMapper(), MoviesMapper(), SearchMapper()) }
         single<DetailRepository> { CastRepositoryImpl(get(), CastMapper()) }
     }
     private val loginModule = module {
         viewModel { LoginViewModel(loginUseCase = LoginUseCase(repository = get())) }
-        viewModel { HomeViewModel(popularMoviesUseCase = HomeUseCase(repository = get())) }
+        viewModel { HomeViewModel(popularMoviesUseCase = HomeUseCase(repository = get()), searchMoviesUseCase = SearchUseCase(get())) }
         viewModel { NowPlayingViewModel(nowPlayingUseCase = NowPlayingUseCase(repository = get())) }
         viewModel { UpcomingViewModel(upcomingUseCase = UpcomingUseCase(repository = get())) }
         viewModel { TopRatedViewModel(topRatedUseCase = TopRatedUseCase(repository = get())) }
