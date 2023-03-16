@@ -8,16 +8,16 @@ class SearchMapper {
 
     operator fun invoke(response: SearchMoviesResponse?
     ) : PopularMovies {
-        val fiveList = response?.results.orEmpty().subList(0,18).map {
+        val fiveList = response?.results.orEmpty().map {
             Movie(
                 id = it.id.toString(),
-                poster = it.posterPath,
-                posterBack = it.backdropPath,
-                title = it.originalTitle,
-                description = it.overview,
-                year = it.releaseDate.take(4),
-                time = it.releaseDate.take(4),
-                gener = it.genreIds.first().toString()
+                poster = it.posterPath.orEmpty(),
+                posterBack = it.backdropPath.orEmpty(),
+                title = it.originalName.orEmpty(),
+                description = it.overview.orEmpty(),
+                year = it.releaseDate?.take(4) ?: it.firstAirDate?.take(4).orEmpty(),
+                time = it.releaseDate?.take(4).orEmpty(),
+                gener = it.genreIds?.first().toString()
             )
         }
         return PopularMovies(

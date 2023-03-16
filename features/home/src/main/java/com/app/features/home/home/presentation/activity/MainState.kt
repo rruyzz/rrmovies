@@ -5,7 +5,7 @@ import com.app.features.home.home.presentation.fragment.HomeFragment
 import com.app.features.home.search.presentation.SearchFragment
 import com.app.features.home.watchList.presentation.WatchListFragment
 
-sealed class MainState(open val fragment: Fragment) {
+sealed class MainState(open val fragment: Fragment? = null) {
     data class MainHomeState(override val fragment: HomeFragment = HomeFragment.newInstance()) :
         MainState(fragment = fragment)
 
@@ -14,8 +14,4 @@ sealed class MainState(open val fragment: Fragment) {
 
     data class WatchListState(override val fragment: WatchListFragment = WatchListFragment.newInstance()) :
         MainState(fragment = fragment)
-}
-
-enum class FragmentType {
-    MAIN, SEARCH, WATCH_LIST
 }

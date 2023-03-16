@@ -1,18 +1,18 @@
 package com.app.features.home.home.presentation.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.commons.models.Movie
-import com.app.commons.utils.hideStatusBar
-import com.app.features.home.R
 import com.app.features.home.databinding.FragmentHomeBinding
 import com.app.features.home.home.domain.models.PopularMovies
+import com.app.features.home.home.presentation.activity.MainActivity
 import com.app.features.home.home.presentation.adapter.HomeAdapter
 import com.app.features.home.home.presentation.adapter.MoviesListAdapter
 import com.app.features.home.nowPlaying.presentation.NowPlayingFragment
@@ -71,9 +71,10 @@ class HomeFragment : Fragment() {
     private fun renderSuccess(list: PopularMovies) {
         binding.moviesList.adapter = HomeAdapter(::onClick, list, requireContext())
         binding.moviesList.layoutManager
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
     }
+
     private fun renderLoading(isLoading: Boolean) {
         binding.progress.isVisible = isLoading
     }
@@ -85,6 +86,16 @@ class HomeFragment : Fragment() {
         binding.textView.setOnClickListener {
             viewModel.getPopularMovies()
         }
+        binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(newText: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextSubmit(query: String): Boolean {
+                (activity as MainActivity?)?.navigateSearch(query)
+                return false
+            }
+        })
     }
     private fun setAdapter() {
         val adapter = MoviesListAdapter(parentFragmentManager, lifecycle)
@@ -96,10 +107,12 @@ class HomeFragment : Fragment() {
 
     }
     private fun setTab() = with(binding) {
-        val tabList = listOf("Now playing",
+        val tabList = listOf(
+            "Now playing",
             "Upcoming",
             "Top rated",
-            "Popular")
+            "Popular"
+        )
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = tabList[position]
         }.attach()

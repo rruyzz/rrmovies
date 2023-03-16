@@ -4,6 +4,7 @@ import com.app.features.home.home.data.model.PopularMoviesResponse
 import com.app.features.home.search.data.model.SearchMoviesResponse
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface HomeService {
 
@@ -19,7 +20,7 @@ interface HomeService {
     suspend fun getTopRatedMovies() : Response<PopularMoviesResponse>
 
     @GET("search/multi")
-    suspend fun getSearchMovies(movieName: String) : Response<SearchMoviesResponse>
+    suspend fun getSearchMovies(@Query("query") movieName: String) : Response<SearchMoviesResponse>
 
 
 }

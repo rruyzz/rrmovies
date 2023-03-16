@@ -11,6 +11,8 @@ class MainViewModel : ViewModel() {
 
     private val _fragmentState = MutableSharedFlow<MainState>(0)
     val fragmentState = _fragmentState.asSharedFlow()
+    var query = ""
+        private set
 
     init {
         onBottomClick(MainState.MainHomeState())
@@ -28,5 +30,9 @@ class MainViewModel : ViewModel() {
                 _fragmentState.emit(fragmentType)
             }
         }
+    }
+
+    fun setQuery(query: String) {
+        this.query = query
     }
 }
