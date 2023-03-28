@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
@@ -15,9 +16,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.commons.models.Movie
 import com.app.features.home.databinding.FragmentSearchBinding
 import com.app.features.home.home.domain.models.PopularMovies
+import com.app.features.home.home.presentation.activity.MainActivity
 import com.app.features.home.home.presentation.adapter.HomeAdapter
 import com.app.features.home.home.presentation.fragment.HomeState
+import com.example.navigation.DetailNavigator
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -25,6 +29,7 @@ class SearchFragment : Fragment() {
 
     private lateinit var binding: FragmentSearchBinding
     private val viewModel: SearchViewModel by viewModel()
+    private val detailNavigator: DetailNavigator by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +44,20 @@ class SearchFragment : Fragment() {
         viewModel.getQuery(arguments)
         observesFlows()
         actionObserver()
+        setButton()
+    }
+
+    private fun setButton() {
+        binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(newText: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextSubmit(query: String): Boolean {
+                viewModel.searchMovies(query)
+                return false
+            }
+        })
     }
 
     private fun actionObserver() = lifecycleScope.launch {
@@ -59,14 +78,14 @@ class SearchFragment : Fragment() {
 
     private fun renderError(error: String) {
         binding.textView.text = error
+        binding.iconLayout.visibility = View.VISIBLE
+        binding.moviesList.adapter = SearchAdapter(::onClick, PopularMovies(emptyList()), requireContext())
     }
 
     private fun renderSuccess(list: PopularMovies) {
+        binding.moviesList.isVisible = true
         binding.moviesList.adapter = SearchAdapter(::onClick, list, requireContext())
         binding.moviesList.layoutManager = GridLayoutManager(requireContext(), 3)
-//        binding.moviesList.layoutManager =
-//            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.iconLayout.isVisible = list.movies.isNotEmpty()
     }
 
     private fun renderLoading(isLoading: Boolean) {
@@ -81,14 +100,7 @@ class SearchFragment : Fragment() {
     }
 
     private fun onClick(movie: Movie) {
-//        detailNavigator.navigate(requireContext(), movie)
-    }
-
-    private fun getQuery(bundle: Bundle?) {
-        val text = bundle?.getString("text")
-        text?.let {
-            binding.search.setQuery(text, true)
-        }
+        detailNavigator.navigate(requireContext(), movie)
     }
 
     companion object {
