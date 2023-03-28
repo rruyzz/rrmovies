@@ -1,6 +1,7 @@
 package com.app.features.home.home.presentation.activity
 
 import android.os.Bundle
+import android.window.OnBackInvokedDispatcher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -25,6 +26,18 @@ class MainActivity : AppCompatActivity() {
         hideStatusBar(window)
         setBottomDialog()
         observer()
+    }
+
+    override fun getOnBackInvokedDispatcher(): OnBackInvokedDispatcher {
+        return super.getOnBackInvokedDispatcher()
+    }
+
+    override fun onBackPressed() {
+        if (binding.navigationBar.selectedItemId != R.id.homeApp) {
+            binding.navigationBar.selectedItemId = R.id.homeApp
+        } else {
+            onBackPressedDispatcher.onBackPressed()
+        }
     }
 
     private fun observer() = lifecycleScope.launch {

@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 
 class SearchViewModel(
     private val searchMoviesUseCase: SearchUseCase,
-    ): ViewModel() {
+) : ViewModel() {
 
     private val _searchMoviesState = MutableSharedFlow<SearchState>(0)
     val searchMoviesState = _searchMoviesState.asSharedFlow()
@@ -33,18 +33,20 @@ class SearchViewModel(
             searchMovies(it)
         }
     }
+
     fun searchMovies(movieName: String) = viewModelScope.launch(Dispatchers.IO) {
-        searchMoviesUseCase(movieName)
-            .flowOn(Dispatchers.IO)
-            .onStart { _searchMoviesState.emit(SearchState.Loading(true)) }
-            .onCompletion {
-                _searchMoviesState.emit(SearchState.Loading(false))
-            }
-            .catch {
-                _searchMoviesState.emit(SearchState.Error(it.message.orEmpty()))
-            }
-            .collect {
-                _searchMoviesState.emit(SearchState.Success(it))
-            }
+        if (movieName.isNotEmpty())
+            searchMoviesUseCase(movieName)
+                .flowOn(Dispatchers.IO)
+                .onStart { _searchMoviesState.emit(SearchState.Loading(true)) }
+                .onCompletion {
+                    _searchMoviesState.emit(SearchState.Loading(false))
+                }
+                .catch {
+                    _searchMoviesState.emit(SearchState.Error(it.message.orEmpty()))
+                }
+                .collect {
+                    _searchMoviesState.emit(SearchState.Success(it))
+                }
     }
 }

@@ -83,19 +83,23 @@ class SearchFragment : Fragment() {
 
     private fun renderError(error: String) {
         binding.textView.text = error
-        binding.iconLayout.visibility = View.VISIBLE
+        binding.iconLayout.isVisible = true
         binding.moviesList.adapter = SearchAdapter(::onClick, PopularMovies(emptyList()), requireContext())
     }
 
     private fun renderSuccess(list: PopularMovies) {
         binding.moviesList.isVisible = true
+        binding.iconLayout.isVisible = list.movies.isEmpty()
         binding.moviesList.adapter = SearchAdapter(::onClick, list, requireContext())
         binding.moviesList.layoutManager = GridLayoutManager(requireContext(), 3)
     }
 
     private fun renderLoading(isLoading: Boolean) {
         binding.progress.isVisible = isLoading
-        binding.iconLayout.visibility = View.GONE
+        binding.moviesList.isVisible = isLoading.not()
+        if(isLoading){
+            binding.iconLayout.isVisible = false
+        }
     }
 
     private fun observesFlows() = lifecycleScope.launch {
