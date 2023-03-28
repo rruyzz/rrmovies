@@ -51,7 +51,9 @@ class SearchFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         hideKeyboard()
+        binding.search.clearFocus()
     }
+
     private fun setButton() {
         binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(newText: String): Boolean {
@@ -84,7 +86,8 @@ class SearchFragment : Fragment() {
     private fun renderError(error: String) {
         binding.textView.text = error
         binding.iconLayout.isVisible = true
-        binding.moviesList.adapter = SearchAdapter(::onClick, PopularMovies(emptyList()), requireContext())
+        binding.moviesList.adapter =
+            SearchAdapter(::onClick, PopularMovies(emptyList()), requireContext())
     }
 
     private fun renderSuccess(list: PopularMovies) {
@@ -97,7 +100,7 @@ class SearchFragment : Fragment() {
     private fun renderLoading(isLoading: Boolean) {
         binding.progress.isVisible = isLoading
         binding.moviesList.isVisible = isLoading.not()
-        if(isLoading){
+        if (isLoading) {
             binding.iconLayout.isVisible = false
         }
     }
