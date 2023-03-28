@@ -8,7 +8,7 @@ class MoviesMapper {
 
     operator fun invoke(response: PopularMoviesResponse?
     ) : PopularMovies {
-        val fiveList = response?.results.orEmpty().map {
+        val fiveList = response?.results.orEmpty().subList(0,18).map {
             Movie(
                 id = it.id.toString(),
                 poster = it.posterPath,

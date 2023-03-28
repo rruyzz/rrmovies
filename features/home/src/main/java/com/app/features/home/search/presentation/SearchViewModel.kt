@@ -20,7 +20,7 @@ class SearchViewModel(
     private val searchMoviesUseCase: SearchUseCase,
     ): ViewModel() {
 
-    private val _searchMoviesState = MutableSharedFlow<HomeState>(0)
+    private val _searchMoviesState = MutableSharedFlow<SearchState>(0)
     val searchMoviesState = _searchMoviesState.asSharedFlow()
 
     private val _query = MutableStateFlow<String?>(null)
@@ -36,15 +36,15 @@ class SearchViewModel(
     fun searchMovies(movieName: String) = viewModelScope.launch(Dispatchers.IO) {
         searchMoviesUseCase(movieName)
             .flowOn(Dispatchers.IO)
-            .onStart { _searchMoviesState.emit(HomeState.Loading(true)) }
+            .onStart { _searchMoviesState.emit(SearchState.Loading(true)) }
             .onCompletion {
-                _searchMoviesState.emit(HomeState.Loading(false))
+                _searchMoviesState.emit(SearchState.Loading(false))
             }
             .catch {
-                _searchMoviesState.emit(HomeState.Error(it.message.orEmpty()))
+                _searchMoviesState.emit(SearchState.Error(it.message.orEmpty()))
             }
             .collect {
-                _searchMoviesState.emit(HomeState.Success(it))
+                _searchMoviesState.emit(SearchState.Success(it))
             }
     }
 }

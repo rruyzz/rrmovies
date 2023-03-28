@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.commons.models.Movie
+import com.app.commons.utils.hideKeyboard
 import com.app.features.home.databinding.FragmentSearchBinding
 import com.app.features.home.home.domain.models.PopularMovies
 import com.app.features.home.home.presentation.activity.MainActivity
@@ -47,6 +48,10 @@ class SearchFragment : Fragment() {
         setButton()
     }
 
+    override fun onResume() {
+        super.onResume()
+        hideKeyboard()
+    }
     private fun setButton() {
         binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(newText: String): Boolean {
@@ -63,13 +68,13 @@ class SearchFragment : Fragment() {
     private fun actionObserver() = lifecycleScope.launch {
         viewModel.searchMoviesState.collect { state ->
             when (state) {
-                is HomeState.Loading -> {
+                is SearchState.Loading -> {
                     renderLoading(state.isLoading)
                 }
-                is HomeState.Success -> {
+                is SearchState.Success -> {
                     renderSuccess(state.popularMovies)
                 }
-                is HomeState.Error -> {
+                is SearchState.Error -> {
                     renderError(state.error)
                 }
             }
