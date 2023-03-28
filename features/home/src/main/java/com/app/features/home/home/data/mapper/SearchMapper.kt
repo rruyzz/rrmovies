@@ -17,7 +17,7 @@ class SearchMapper {
                 description = it.overview.orEmpty(),
                 year = it.releaseDate?.take(4) ?: it.firstAirDate?.take(4).orEmpty(),
                 time = it.releaseDate?.take(4).orEmpty(),
-                gener = it.genreIds?.first().toString()
+                gener = (it.genreIds?.firstOrNull() ?: "").toString()
             )
         }.filter {
             it.poster.isNotEmpty() && it.title.isNotEmpty()

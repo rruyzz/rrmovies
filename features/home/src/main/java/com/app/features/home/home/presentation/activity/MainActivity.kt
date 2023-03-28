@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.search -> {
                     viewModel.onBottomClick(MainState.SearchState(SearchFragment.newInstance(viewModel.query)))
+                    viewModel.setQuery("")
                 }
                 R.id.watchList -> {
                     viewModel.onBottomClick(MainState.WatchListState())
