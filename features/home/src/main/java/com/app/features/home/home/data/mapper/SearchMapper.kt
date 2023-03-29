@@ -1,10 +1,13 @@
 package com.app.features.home.home.data.mapper
 
+import com.app.commons.gender.GenderListMapper
 import com.app.commons.models.Movie
 import com.app.features.home.home.domain.models.PopularMovies
 import com.app.features.home.search.data.model.SearchMoviesResponse
 
-class SearchMapper {
+class SearchMapper(
+    private val genderListMapper: GenderListMapper,
+) {
 
     operator fun invoke(response: SearchMoviesResponse?
     ) : PopularMovies {
@@ -17,7 +20,7 @@ class SearchMapper {
                 description = it.overview.orEmpty(),
                 year = it.releaseDate?.take(4) ?: it.firstAirDate?.take(4).orEmpty(),
                 time = it.releaseDate?.take(4).orEmpty(),
-                gener = (it.genreIds?.firstOrNull() ?: "").toString()
+                gener = genderListMapper(it.genreIds)
             )
         }.filter {
             it.poster.isNotEmpty() && it.title.isNotEmpty()

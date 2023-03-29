@@ -1,6 +1,7 @@
 package com.app.rrmovies
 
 import android.app.Application
+import com.app.commons.gender.GenderListMapper
 import com.app.detail.cast.domain.usecase.CastUseCase
 import com.app.detail.cast.presentation.CastViewModel
 import com.app.detail.cast.data.mapper.CastMapper
@@ -28,9 +29,14 @@ import com.app.features.home.topRated.domain.TopRatedUseCase
 import com.app.features.home.topRated.presentation.TopRatedViewModel
 import com.app.features.home.upcoming.domain.UpcomingUseCase
 import com.app.features.home.upcoming.presentation.UpcomingViewModel
+import com.app.features.login.data.api.GenderService
 import com.app.features.login.data.google.LoginGoogle
+import com.app.features.login.data.mapper.GenderMapper
+import com.app.features.login.data.repository.GenderRepositoryImpl
 import com.app.features.login.data.repository.LoginRepository
-import com.app.features.login.domain.LoginUseCase
+import com.app.features.login.domain.repository.GenderRepository
+import com.app.features.login.domain.usecases.GenderUseCase
+import com.app.features.login.domain.usecases.LoginUseCase
 import com.app.features.login.navigation.LoginNavigatorImpl
 import com.app.features.login.presentation.LoginViewModel
 import com.app.network.utils.createHttpClient
@@ -59,14 +65,17 @@ class MainApplication : Application() {
         single<LoginNavigator> { LoginNavigatorImpl() }
         single<HomeNavigator> { HomeNavigatorImpl() }
         single<DetailNavigator> { DetailNavigatorImpl() }
+        single<DetailNavigator> { DetailNavigatorImpl() }
+        single { GenderListMapper() }
     }
     private val repositoryModule = module {
         single<LoginRepository> { LoginGoogle() }
-        single<HomeRepository> { HomeRepositoryImpl(get(), PopularMoviesMapper(), MoviesMapper(), SearchMapper()) }
+        single<HomeRepository> { HomeRepositoryImpl(get(), PopularMoviesMapper(get()), MoviesMapper(get()), SearchMapper(get())) }
         single<DetailRepository> { CastRepositoryImpl(get(), CastMapper()) }
+        single<GenderRepository> { GenderRepositoryImpl(get(), GenderMapper()) }
     }
     private val loginModule = module {
-        viewModel { LoginViewModel(loginUseCase = LoginUseCase(repository = get())) }
+        viewModel { LoginViewModel(loginUseCase = LoginUseCase(repository = get()), genderUseCase = GenderUseCase(get())) }
         viewModel { HomeViewModel(popularMoviesUseCase = HomeUseCase(repository = get()), searchMoviesUseCase = SearchUseCase(get())) }
         viewModel { NowPlayingViewModel(nowPlayingUseCase = NowPlayingUseCase(repository = get())) }
         viewModel { UpcomingViewModel(upcomingUseCase = UpcomingUseCase(repository = get())) }
@@ -83,6 +92,7 @@ class MainApplication : Application() {
     private val apiModule = module {
         single(createdAtStart = false) { get<Retrofit>().create(HomeService::class.java) }
         single(createdAtStart = false) { get<Retrofit>().create(DetailService::class.java) }
+        single(createdAtStart = false) { get<Retrofit>().create(GenderService::class.java) }
     }
 
 }
