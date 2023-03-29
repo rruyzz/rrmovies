@@ -12,12 +12,12 @@ class MoviesMapper(private val genderListMapper: GenderListMapper) {
         val fiveList = response?.results.orEmpty().subList(0,18).map {
             Movie(
                 id = it.id.toString(),
-                poster = it.posterPath,
-                posterBack = it.backdropPath,
-                title = it.titleMovie,
-                description = it.overview,
-                year = it.releaseDate.take(4),
-                time = it.releaseDate.take(4),
+                poster = it.posterPath.orEmpty(),
+                posterBack = it.backdropPath.orEmpty(),
+                title = it.titleMovie.orEmpty(),
+                description = it.overview.orEmpty(),
+                year = it.releaseDate?.take(4).orEmpty(),
+                time = it.releaseDate?.take(4).orEmpty(),
                 gener = genderListMapper(it.genreIds)
             )
         }
