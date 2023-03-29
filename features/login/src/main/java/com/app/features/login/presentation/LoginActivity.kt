@@ -47,6 +47,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun navigateMainActivity() {
+        finishAffinity()
         homeNavigator.navigate(this)
     }
 

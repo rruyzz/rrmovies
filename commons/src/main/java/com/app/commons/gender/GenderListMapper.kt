@@ -12,6 +12,6 @@ class GenderListMapper{
                 listString.add(it.name)
             }
         }
-        return listString.joinToString()
+        return listString.firstOrNull().orEmpty()
     }
 }
