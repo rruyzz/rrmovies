@@ -31,6 +31,7 @@ class DetailActivity : AppCompatActivity() {
         binding.imagePosterBackgroundCard.setBackgroundResource(R.drawable.background_poster)
         binding.textYear.text = movie?.year.orEmpty()
         binding.textGener.text = movie?.gener
+        binding.grade.text = movie?.grade
         setAdapter(movie?.description.orEmpty(), movie?.id.orEmpty())
         setTab()
     }

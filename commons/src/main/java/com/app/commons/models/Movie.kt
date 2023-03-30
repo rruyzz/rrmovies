@@ -13,4 +13,5 @@ data class Movie (
     val year: String,
     val time: String,
     val gener: String,
+    val grade: String,
 ) : Parcelable

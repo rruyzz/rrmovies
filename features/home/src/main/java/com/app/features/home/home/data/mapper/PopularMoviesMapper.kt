@@ -19,7 +19,8 @@ class PopularMoviesMapper(
                 description = it.overview.orEmpty(),
                 year = it.releaseDate?.take(4).orEmpty(),
                 time = it.releaseDate?.take(4).orEmpty(),
-                gener = genderListMapper(it.genreIds)
+                gener = genderListMapper(it.genreIds),
+                grade = it.voteAverage.toString()
             )
         }
         return PopularMovies(
