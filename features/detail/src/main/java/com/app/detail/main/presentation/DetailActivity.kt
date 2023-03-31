@@ -2,6 +2,8 @@ package com.app.detail.main.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.app.commons.models.Movie
 import com.app.commons.utils.hideStatusBar
 import com.app.commons.utils.parcelable
@@ -9,20 +11,42 @@ import com.app.detail.R
 import com.app.detail.cast.presentation.CastFragment
 import com.app.detail.databinding.ActivityDetailBinding
 import com.app.detail.description.presentation.DescriptionFragment
-import com.app.detail.reviews.presentation.ReviewsFragment
+import com.app.detail.main.domain.domain.UpdateMovie
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailBinding
-
+    private val viewModel by viewModel<DetailViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         hideStatusBar(window)
-        val movie = intent?.parcelable<Movie>("movie")
+        viewModel.setMovie(intent?.parcelable<Movie>("movie"))
+        setViews(viewModel._movie)
+        setAdapter(viewModel._movie?.description.orEmpty(), viewModel._movie?.id.toString())
+        setTab()
+        observer()
+    }
+
+    private fun observer() = lifecycleScope.launch {
+        viewModel.detailState.collect {
+            when(it){
+                is DetailState.HasSavedMovie -> setIconSaved(it.hasSaved)
+            }
+        }
+    }
+    private fun setIconSaved(hasSaved: Boolean) {
+        val iconResource = if(hasSaved) R.drawable.ic_saved else R.drawable.ic_not_saved
+        val icon = ContextCompat.getDrawable(this, iconResource)
+        binding.toolbar.setIcon(icon)
+    }
+
+    private fun setViews(movie: Movie?) {
         Glide.with(this).load("https://image.tmdb.org/t/p/w500${movie?.posterBack}")
             .into(binding.imagePosterBackgroundCard)
         Glide.with(this).load("https://image.tmdb.org/t/p/w500${movie?.poster}")
@@ -32,8 +56,10 @@ class DetailActivity : AppCompatActivity() {
         binding.textYear.text = movie?.year.orEmpty()
         binding.textGener.text = movie?.gener
         binding.grade.text = movie?.grade
-        setAdapter(movie?.description.orEmpty(), movie?.id.orEmpty())
-        setTab()
+        binding.toolbar.setOnIconListener {  hasSaved ->
+            if(hasSaved) viewModel.onClick(UpdateMovie.SaveMovie)
+            else viewModel.onClick(UpdateMovie.DeleteMovie)
+        }
     }
 
     private fun setAdapter(description: String, movieId: String) {

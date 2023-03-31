@@ -22,6 +22,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <com.app.commons.customView.CustomToolbar
+                android:id="@+id/toolbar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:toolbar_icon="@drawable/ic_not_saved"
+                app:toolbar_title="Detail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imagePosterBackgroundCard"
                 android:layout_width="0dp"
@@ -29,7 +39,7 @@
                 android:scaleType="fitXY"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.SelectedCornerRadius"
                 app:srcCompat="@drawable/image_superbad" />
 

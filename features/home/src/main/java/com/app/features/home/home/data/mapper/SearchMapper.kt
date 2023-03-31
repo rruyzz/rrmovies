@@ -13,7 +13,7 @@ class SearchMapper(
     ) : PopularMovies {
         val list = response?.results.orEmpty().map {
             Movie(
-                id = it.id.toString(),
+                id = it.id ?: 0,
                 poster = it.posterPath.orEmpty(),
                 posterBack = it.backdropPath.orEmpty(),
                 title = it.titleName.orEmpty(),

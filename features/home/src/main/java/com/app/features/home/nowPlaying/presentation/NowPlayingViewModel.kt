@@ -12,7 +12,7 @@ class NowPlayingViewModel(
     private val nowPlayingUseCase: NowPlayingUseCase
 ) : ViewModel() {
 
-    private val _nowPlayingMoviesState = MutableSharedFlow<HomeState>(0)
+    private val _nowPlayingMoviesState = MutableSharedFlow<NowPlayingState>(0)
     val nowPlayingMoviesState = _nowPlayingMoviesState.asSharedFlow()
 
 
@@ -23,15 +23,15 @@ class NowPlayingViewModel(
     fun getPopularMovies() = viewModelScope.launch(Dispatchers.IO) {
         nowPlayingUseCase()
             .flowOn(Dispatchers.IO)
-            .onStart { _nowPlayingMoviesState.emit(HomeState.Loading(true)) }
+            .onStart { _nowPlayingMoviesState.emit(NowPlayingState.Loading(true)) }
             .onCompletion {
-                _nowPlayingMoviesState.emit(HomeState.Loading(false))
+                _nowPlayingMoviesState.emit(NowPlayingState.Loading(false))
             }
             .catch {
-                _nowPlayingMoviesState.emit(HomeState.Error(it.message.orEmpty()))
+                _nowPlayingMoviesState.emit(NowPlayingState.Error(it.message.orEmpty()))
             }
             .collect {
-                _nowPlayingMoviesState.emit(HomeState.Success(it))
+                _nowPlayingMoviesState.emit(NowPlayingState.Success(it))
             }
     }
 }

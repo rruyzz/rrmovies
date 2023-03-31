@@ -16,7 +16,7 @@ class CustomToolbar @JvmOverloads constructor(
     private var titleToolbar = ""
     private var iconToolbar : Drawable? = null
     private var binding: ItemCustomToolbarBinding
-    private val listener: OnClickListener1? = null
+    private var hasMovieSave: Boolean = false
 
     init {
         binding = ItemCustomToolbarBinding.inflate(LayoutInflater.from(context), this, true)
@@ -34,13 +34,20 @@ class CustomToolbar @JvmOverloads constructor(
         this.title.text = title
     }
 
-    private fun setIcon(icon: Drawable?) = with(binding) {
+    fun setIcon(icon: Drawable?) = with(binding) {
         this.icEnd.setImageDrawable(icon)
     }
 
     fun setOnClickListener(onClickListener: () -> Unit) {
         binding.icBack.setOnClickListener {
             onClickListener.invoke()
+        }
+    }
+
+    fun setOnIconListener(onIconListener: (Boolean) -> Unit) {
+        binding.icEnd.setOnClickListener {
+            onIconListener.invoke(hasMovieSave)
+            hasMovieSave = hasMovieSave.not()
         }
     }
 }

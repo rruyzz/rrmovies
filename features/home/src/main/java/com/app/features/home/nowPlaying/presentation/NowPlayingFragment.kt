@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.app.commons.models.Movie
 import com.app.features.home.databinding.FragmentGridRecyclerLayoutBinding
 import com.app.features.home.home.domain.models.PopularMovies
-import com.app.features.home.home.presentation.fragment.HomeState
 import com.app.features.home.home.presentation.adapter.GridAdapter
 import com.example.navigation.DetailNavigator
 import kotlinx.coroutines.launch
@@ -41,13 +40,13 @@ class NowPlayingFragment : Fragment() {
     private fun actionObserver() = lifecycleScope.launch {
         viewModel.nowPlayingMoviesState.collect { state ->
             when (state) {
-                is HomeState.Loading -> {
+                is NowPlayingState.Loading -> {
                     renderLoading(state.isLoading)
                 }
-                is HomeState.Success -> {
-                    renderSuccess(state.popularMovies)
+                is NowPlayingState.Success -> {
+                    renderSuccess(state.nowPlayingMovies)
                 }
-                is HomeState.Error -> {
+                is NowPlayingState.Error -> {
                     renderError(state.error)
                 }
             }

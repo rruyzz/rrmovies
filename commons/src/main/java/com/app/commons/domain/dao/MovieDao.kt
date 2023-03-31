@@ -1,0 +1,19 @@
+package com.app.commons.domain.dao
+
+import androidx.room.*
+import com.app.commons.models.Movie
+import kotlinx.coroutines.flow.Flow
+
+@Dao
+interface MovieDao {
+
+    @Upsert
+    suspend fun upsertMovie(movie: Movie)
+
+    @Delete
+    suspend fun deleteContact(movie: Movie)
+
+    @Query("SELECT * FROM movie ORDER BY title ASC")
+    fun getMovies() : Flow<List<Movie>>
+
+}

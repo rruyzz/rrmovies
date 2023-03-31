@@ -1,6 +1,9 @@
 package com.app.rrmovies
 
 import android.app.Application
+import androidx.room.Room
+import com.app.commons.data.MovieRoomDatabase
+import com.app.commons.domain.dao.MovieDao
 import com.app.commons.gender.GenderListMapper
 import com.app.detail.cast.domain.usecase.CastUseCase
 import com.app.detail.cast.presentation.CastViewModel
@@ -8,6 +11,7 @@ import com.app.detail.cast.data.mapper.CastMapper
 import com.app.detail.main.data.repository.CastRepositoryImpl
 import com.app.detail.main.data.service.DetailService
 import com.app.detail.main.domain.repository.DetailRepository
+import com.app.detail.main.presentation.DetailViewModel
 import com.app.detail.navigation.DetailNavigatorImpl
 import com.app.features.home.home.data.mapper.MoviesMapper
 import com.app.features.home.home.data.mapper.PopularMoviesMapper
@@ -29,6 +33,7 @@ import com.app.features.home.topRated.domain.TopRatedUseCase
 import com.app.features.home.topRated.presentation.TopRatedViewModel
 import com.app.features.home.upcoming.domain.UpcomingUseCase
 import com.app.features.home.upcoming.presentation.UpcomingViewModel
+import com.app.features.home.watchList.presentation.WatchListViewModel
 import com.app.features.login.data.api.GenderService
 import com.app.features.login.data.google.LoginGoogle
 import com.app.features.login.data.mapper.GenderMapper
@@ -84,6 +89,8 @@ class MainApplication : Application() {
         viewModel { CastViewModel(castUseCase = CastUseCase(repository = get())) }
         viewModel { MainViewModel() }
         viewModel { SearchViewModel(searchMoviesUseCase = SearchUseCase(repository = get())) }
+        viewModel { DetailViewModel(dao = get()) }
+        viewModel { WatchListViewModel(dao = get()) }
     }
     private val retrofitModule = module{
         single { createHttpClient() }
@@ -93,6 +100,19 @@ class MainApplication : Application() {
         single(createdAtStart = false) { get<Retrofit>().create(HomeService::class.java) }
         single(createdAtStart = false) { get<Retrofit>().create(DetailService::class.java) }
         single(createdAtStart = false) { get<Retrofit>().create(GenderService::class.java) }
+        single {
+            Room.databaseBuilder(
+                applicationContext,
+                MovieRoomDatabase::class.java,
+                "movie_database"
+            ).build()
+        }
+        single<MovieDao> {
+            val database = get<MovieRoomDatabase>()
+            database.dao
+        }
+
+
     }
 
 }

@@ -11,7 +11,7 @@ class MoviesMapper(private val genderListMapper: GenderListMapper) {
     ) : PopularMovies {
         val fiveList = response?.results.orEmpty().subList(0,18).map {
             Movie(
-                id = it.id.toString(),
+                id = it.id ?: 0,
                 poster = it.posterPath.orEmpty(),
                 posterBack = it.backdropPath.orEmpty(),
                 title = it.titleMovie.orEmpty(),
