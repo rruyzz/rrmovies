@@ -16,4 +16,7 @@ interface MovieDao {
     @Query("SELECT * FROM movie ORDER BY title ASC")
     fun getMovies() : Flow<List<Movie>>
 
+    @Query("SELECT EXISTS(SELECT * FROM movie WHERE id = :id)")
+    fun hasSaved(id : Int): Flow<Boolean>
+
 }

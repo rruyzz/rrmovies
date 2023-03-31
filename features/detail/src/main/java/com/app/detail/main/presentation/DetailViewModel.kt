@@ -6,7 +6,6 @@ import com.app.commons.domain.dao.MovieDao
 import com.app.commons.models.Movie
 import com.app.detail.main.domain.domain.UpdateMovie
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
@@ -22,8 +21,16 @@ class DetailViewModel(
 
     fun setMovie(movie: Movie?) {
         _movie = movie
+        checkHasSaved(_movie?.id)
     }
 
+    private fun checkHasSaved(id: Int?) = viewModelScope.launch {
+        id?.let{
+            dao.hasSaved(it).collect{ hasSaved ->
+                _detailState.emit(DetailState.HasSavedMovie(hasSaved))
+            }
+        }
+    }
     fun onClick(click: UpdateMovie){
         when(click){
             is UpdateMovie.SaveMovie -> {
