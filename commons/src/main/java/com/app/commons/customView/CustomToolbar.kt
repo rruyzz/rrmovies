@@ -5,9 +5,9 @@ import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat
 import com.app.commons.R
 import com.app.commons.databinding.ItemCustomToolbarBinding
-import android.view.View.OnClickListener as OnClickListener1
 
 class CustomToolbar @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -34,7 +34,13 @@ class CustomToolbar @JvmOverloads constructor(
         this.title.text = title
     }
 
-    fun setIcon(icon: Drawable?) = with(binding) {
+    fun hasSaved(_hasSaved: Boolean, isInit: Boolean = false) {
+        hasMovieSave = if(isInit) _hasSaved else _hasSaved.not()
+        val iconResource = if(_hasSaved) R.drawable.ic_saved else R.drawable.ic_not_saved
+        val icon = ResourcesCompat.getDrawable(resources, iconResource, null);
+        setIcon(icon)
+    }
+    private fun setIcon(icon: Drawable?) = with(binding) {
         this.icEnd.setImageDrawable(icon)
     }
 
@@ -46,8 +52,8 @@ class CustomToolbar @JvmOverloads constructor(
 
     fun setOnIconListener(onIconListener: (Boolean) -> Unit) {
         binding.icEnd.setOnClickListener {
+            hasSaved(hasMovieSave)
             onIconListener.invoke(hasMovieSave)
-            hasMovieSave = hasMovieSave.not()
         }
     }
 }

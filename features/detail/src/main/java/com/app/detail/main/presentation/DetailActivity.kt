@@ -2,7 +2,6 @@ package com.app.detail.main.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.app.commons.models.Movie
 import com.app.commons.utils.hideStatusBar
@@ -41,9 +40,7 @@ class DetailActivity : AppCompatActivity() {
         }
     }
     private fun setIconSaved(hasSaved: Boolean) {
-        val iconResource = if(hasSaved) R.drawable.ic_saved else R.drawable.ic_not_saved
-        val icon = ContextCompat.getDrawable(this, iconResource)
-        binding.toolbar.setIcon(icon)
+        binding.toolbar.hasSaved(hasSaved, true)
     }
 
     private fun setViews(movie: Movie?) {

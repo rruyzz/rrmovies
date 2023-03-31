@@ -37,7 +37,6 @@ class DetailViewModel(
                 viewModelScope.launch {
                     _movie?.let{
                         dao.upsertMovie(it)
-                        _detailState.emit(DetailState.HasSavedMovie(true))
                     }
                 }
             }
@@ -45,7 +44,6 @@ class DetailViewModel(
                 viewModelScope.launch {
                     _movie?.let{
                         dao.deleteContact(it)
-                        _detailState.emit(DetailState.HasSavedMovie(false))
                     }
                 }
             }
