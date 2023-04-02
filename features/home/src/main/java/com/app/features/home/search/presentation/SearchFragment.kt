@@ -9,11 +9,12 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.commons.models.Movie
 import com.app.commons.utils.hideKeyboard
 import com.app.features.home.databinding.FragmentSearchBinding
 import com.app.features.home.home.domain.models.PopularMovies
+import com.app.features.home.home.presentation.adapter.DetailAdapter
 import com.example.navigation.DetailNavigator
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -59,6 +60,9 @@ class SearchFragment : Fragment() {
                 return false
             }
         })
+        binding.toolbar.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
     }
 
     private fun actionObserver() = lifecycleScope.launch {
@@ -81,14 +85,14 @@ class SearchFragment : Fragment() {
         binding.textView.text = error
         binding.iconLayout.isVisible = true
         binding.moviesList.adapter =
-            SearchAdapter(::onClick, PopularMovies(emptyList()), requireContext())
+            DetailAdapter(::onClick, PopularMovies(emptyList()), requireContext())
     }
 
     private fun renderSuccess(list: PopularMovies) {
         binding.moviesList.isVisible = true
         binding.iconLayout.isVisible = list.movies.isEmpty()
-        binding.moviesList.adapter = SearchAdapter(::onClick, list, requireContext())
-        binding.moviesList.layoutManager = GridLayoutManager(requireContext(), 3)
+        binding.moviesList.adapter = DetailAdapter(::onClick, list, requireContext())
+        binding.moviesList.layoutManager = LinearLayoutManager(requireContext())
     }
 
     private fun renderLoading(isLoading: Boolean) {

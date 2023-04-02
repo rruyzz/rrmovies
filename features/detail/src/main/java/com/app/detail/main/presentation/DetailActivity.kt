@@ -51,12 +51,13 @@ class DetailActivity : AppCompatActivity() {
         binding.titleMovie.text = movie?.title.orEmpty()
         binding.imagePosterBackgroundCard.setBackgroundResource(R.drawable.background_poster)
         binding.textYear.text = movie?.year.orEmpty()
-        binding.textGener.text = movie?.gener
+        binding.textGener.text = movie?.gender
         binding.grade.text = movie?.grade
         binding.toolbar.setOnIconListener {  hasSaved ->
             if(hasSaved) viewModel.onClick(UpdateMovie.SaveMovie)
             else viewModel.onClick(UpdateMovie.DeleteMovie)
         }
+        binding.toolbar.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
     }
 
     private fun setAdapter(description: String, movieId: String) {
@@ -64,6 +65,7 @@ class DetailActivity : AppCompatActivity() {
         adapter.addFragment(DescriptionFragment(description))
         adapter.addFragment(CastFragment(movieId))
         binding.viewPager.adapter = adapter
+
 
     }
     private fun setTab() = with(binding) {

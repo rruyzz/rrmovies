@@ -1,4 +1,4 @@
-package com.app.features.home.search.presentation
+package com.app.features.home.home.presentation.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,21 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.app.commons.models.Movie
-import com.app.features.home.databinding.FragmentGridRecyclerLayoutBinding
-import com.app.features.home.databinding.ItemMovieBinding
-import com.app.features.home.databinding.ItemPosterBinding
+import com.app.features.home.databinding.ItemDetailAdapterBinding
 import com.app.features.home.home.domain.models.PopularMovies
 import com.bumptech.glide.Glide
 
-class SearchAdapter(
+class DetailAdapter(
     var onClick: (Movie) -> Unit,
     private val searchMovies: PopularMovies,
     private val context: Context
-) : RecyclerView.Adapter<SearchAdapter.ListViewHolder>() {
+) : RecyclerView.Adapter<DetailAdapter.ListViewHolder>() {
 
-    lateinit var binding: ItemPosterBinding
+    lateinit var binding: ItemDetailAdapterBinding
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        binding = ItemPosterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        binding = ItemDetailAdapterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ListViewHolder(binding.root)
     }
 
@@ -38,6 +36,10 @@ class SearchAdapter(
         fun bind(movie: Movie) = with(binding) {
             Glide.with(context).load("https://image.tmdb.org/t/p/w500${movie.poster}")
                 .into(imagePoster)
+            binding.textName.text = movie.title
+            binding.textGrade.text = movie.grade
+            binding.textGender.text = movie.gender
+            binding.textYear.text = movie.year
         }
 
 

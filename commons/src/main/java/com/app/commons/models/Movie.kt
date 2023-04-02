@@ -14,7 +14,7 @@ data class Movie (
     val description: String,
     val year: String,
     val time: String,
-    val gener: String,
+    val gender: String,
     val grade: String,
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0

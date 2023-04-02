@@ -5,12 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.commons.models.Movie
 import com.app.features.home.databinding.FragmentWatchListBinding
 import com.app.features.home.home.domain.models.PopularMovies
-import com.app.features.home.home.presentation.adapter.GridAdapter
+import com.app.features.home.home.presentation.adapter.DetailAdapter
 import com.example.navigation.DetailNavigator
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -49,8 +50,10 @@ class WatchListFragment : Fragment() {
     }
 
     private fun renderSuccess(list: PopularMovies) {
-        binding.recycler.adapter = GridAdapter( list, requireContext(), ::onClick)
-        binding.recycler.layoutManager = GridLayoutManager(requireContext(), 3)
+        binding.moviesList.isVisible = true
+        binding.iconLayout.isVisible = list.movies.isEmpty()
+        binding.moviesList.adapter = DetailAdapter(::onClick, list, requireContext())
+        binding.moviesList.layoutManager = LinearLayoutManager(requireContext())
 
     }
     private fun onClick(movie: Movie) {

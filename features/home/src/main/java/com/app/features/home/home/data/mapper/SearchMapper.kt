@@ -20,7 +20,7 @@ class SearchMapper(
                 description = it.overview.orEmpty(),
                 year = it.releaseDate?.take(4) ?: it.firstAirDate?.take(4).orEmpty(),
                 time = it.releaseDate?.take(4).orEmpty(),
-                gener = genderListMapper(it.genreIds),
+                gender = genderListMapper(it.genreIds),
                 grade = it.voteAverage.toString()
             )
         }.filter {

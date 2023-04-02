@@ -18,7 +18,7 @@ class MoviesMapper(private val genderListMapper: GenderListMapper) {
                 description = it.overview.orEmpty(),
                 year = it.releaseDate?.take(4).orEmpty(),
                 time = it.releaseDate?.take(4).orEmpty(),
-                gener = genderListMapper(it.genreIds),
+                gender = genderListMapper(it.genreIds),
                 grade = it.voteAverage.toString()
             )
         }
