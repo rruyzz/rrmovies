@@ -77,6 +77,10 @@ class HomeFragment : Fragment() {
 
     private fun renderLoading(isLoading: Boolean) {
         binding.progress.isVisible = isLoading
+        binding.search.isVisible = isLoading.not()
+        binding.textView.isVisible = isLoading.not()
+        binding.tabLayout.isVisible = isLoading.not()
+        binding.viewPager.isVisible = isLoading.not()
     }
     private fun onClick(movie: Movie) {
         detailNavigator.navigate(requireContext(), movie)
