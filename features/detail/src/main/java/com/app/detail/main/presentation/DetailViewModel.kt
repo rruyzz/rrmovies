@@ -15,12 +15,12 @@ class DetailViewModel(
 
     private val _detailState = MutableSharedFlow<DetailState>(0)
     val detailState = _detailState.asSharedFlow()
-    var _movie : Movie? = null
+    var movie : Movie? = null
         private set
 
 
-    fun setMovie(movie: Movie?) {
-        _movie = movie
+    fun setMovie(_movie: Movie?) {
+        movie = _movie
         checkHasSaved(_movie?.id)
     }
 
@@ -35,14 +35,14 @@ class DetailViewModel(
         when(click){
             is UpdateMovie.SaveMovie -> {
                 viewModelScope.launch {
-                    _movie?.let{
+                    movie?.let{
                         dao.upsertMovie(it)
                     }
                 }
             }
             is UpdateMovie.DeleteMovie -> {
                 viewModelScope.launch {
-                    _movie?.let{
+                    movie?.let{
                         dao.deleteContact(it)
                     }
                 }

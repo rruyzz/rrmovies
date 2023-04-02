@@ -26,8 +26,8 @@ class DetailActivity : AppCompatActivity() {
         setContentView(binding.root)
         hideStatusBar(window)
         viewModel.setMovie(intent?.parcelable<Movie>("movie"))
-        setViews(viewModel._movie)
-        setAdapter(viewModel._movie?.description.orEmpty(), viewModel._movie?.id.toString())
+        setViews(viewModel.movie)
+        setAdapter(viewModel.movie?.description.orEmpty(), viewModel.movie?.id.toString())
         setTab()
         observer()
     }
@@ -43,28 +43,28 @@ class DetailActivity : AppCompatActivity() {
         binding.toolbar.hasSaved(hasSaved, true)
     }
 
-    private fun setViews(movie: Movie?) {
-        Glide.with(this).load("https://image.tmdb.org/t/p/w500${movie?.posterBack}")
-            .into(binding.imagePosterBackgroundCard)
-        Glide.with(this).load("https://image.tmdb.org/t/p/w500${movie?.poster}")
-            .into(binding.imagePoster)
-        binding.titleMovie.text = movie?.title.orEmpty()
-        binding.imagePosterBackgroundCard.setBackgroundResource(R.drawable.background_poster)
-        binding.textYear.text = movie?.year.orEmpty()
-        binding.textGener.text = movie?.gender
-        binding.grade.text = movie?.grade
-        binding.toolbar.setOnIconListener {  hasSaved ->
+    private fun setViews(movie: Movie?) = with(binding) {
+        Glide.with(this@DetailActivity).load("https://image.tmdb.org/t/p/w500${movie?.posterBack}")
+            .into(imagePosterBackgroundCard)
+        Glide.with(this@DetailActivity).load("https://image.tmdb.org/t/p/w500${movie?.poster}")
+            .into(imagePoster)
+        titleMovie.text = movie?.title.orEmpty()
+        imagePosterBackgroundCard.setBackgroundResource(R.drawable.background_poster)
+        textYear.text = movie?.year.orEmpty()
+        textGener.text = movie?.gender
+        grade.text = movie?.grade
+        toolbar.setOnIconListener {  hasSaved ->
             if(hasSaved) viewModel.onClick(UpdateMovie.SaveMovie)
             else viewModel.onClick(UpdateMovie.DeleteMovie)
         }
-        binding.toolbar.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
+        toolbar.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
     }
 
-    private fun setAdapter(description: String, movieId: String) {
+    private fun setAdapter(description: String, movieId: String) = with(binding){
         val adapter = DetailMovieAdapter(supportFragmentManager, lifecycle)
         adapter.addFragment(DescriptionFragment(description))
         adapter.addFragment(CastFragment(movieId))
-        binding.viewPager.adapter = adapter
+        viewPager.adapter = adapter
 
 
     }
