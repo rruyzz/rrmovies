@@ -55,11 +55,11 @@ class WatchListFragment : Fragment() {
 //        binding.textView.text = error
     }
 
-    private fun renderSuccess(list: PopularMovies) {
-        binding.moviesList.isVisible = true
-        binding.iconLayout.isVisible = list.movies.isEmpty()
-        binding.moviesList.adapter = DetailAdapter(::onClick, list, requireContext())
-        binding.moviesList.layoutManager = LinearLayoutManager(requireContext())
+    private fun renderSuccess(list: PopularMovies) = with(binding) {
+        iconLayout.isVisible = list.movies.isEmpty()
+        moviesList.adapter = DetailAdapter(::onClick, list, requireContext())
+        moviesList.layoutManager = LinearLayoutManager(requireContext())
+        progress.visibility = View.GONE
 
     }
     private fun onClick(movie: Movie) {
