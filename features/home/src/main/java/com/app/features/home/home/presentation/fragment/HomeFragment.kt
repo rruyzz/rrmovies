@@ -44,8 +44,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setButton()
         actionObserver()
-        setAdapter()
-        setTab()
+
     }
 
     private fun actionObserver() = lifecycleScope.launch {
@@ -72,7 +71,8 @@ class HomeFragment : Fragment() {
         binding.moviesList.adapter = HomeAdapter(::onClick, list, requireContext())
         binding.moviesList.layoutManager
         LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-
+        setAdapter()
+        setTab()
     }
 
     private fun renderLoading(isLoading: Boolean) {
