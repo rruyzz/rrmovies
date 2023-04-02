@@ -33,6 +33,7 @@ class WatchListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         actionObserver()
+        setButton()
     }
 
     private fun actionObserver() = lifecycleScope.launch {
@@ -45,6 +46,11 @@ class WatchListFragment : Fragment() {
         }
     }
 
+    private fun setButton() {
+        binding.toolbar.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
+    }
     private fun renderError(error: String) {
 //        binding.textView.text = error
     }
