@@ -1,33 +1,41 @@
 {
   "project_info": {
-    "project_number": "1013570413030",
-    "project_id": "rrmovies-d1a0a",
-    "storage_bucket": "rrmovies-d1a0a.appspot.com"
+    "project_number": "666484959989",
+    "project_id": "rrmovies-project",
+    "storage_bucket": "rrmovies-project.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1013570413030:android:dfa3cf8975073d7386f627",
+        "mobilesdk_app_id": "1:666484959989:android:c30c1fdb9a3045392373bc",
         "android_client_info": {
           "package_name": "com.app.rrmovies"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1013570413030-nnt33raabljk15tt18f10tjp5lcobje8.apps.googleusercontent.com",
+          "client_id": "666484959989-7vmm78upsdouu8mu5o9969jhfdkrer3a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.rrmovies",
+            "certificate_hash": "b8d2de572e4dfe3a6269cb8def49d4df3fe97e87"
+          }
+        },
+        {
+          "client_id": "666484959989-3p8inej16reski80d9v9ted47ndrp91q.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCXxSaY68jp0WFybLeWn_PfVKKB7vzpR2c"
+          "current_key": "AIzaSyACO7di3OJq_eMyCs1MxgI118UR6WjS3eE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1013570413030-nnt33raabljk15tt18f10tjp5lcobje8.apps.googleusercontent.com",
+              "client_id": "666484959989-3p8inej16reski80d9v9ted47ndrp91q.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
