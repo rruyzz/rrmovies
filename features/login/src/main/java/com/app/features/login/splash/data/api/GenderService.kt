@@ -1,4 +1,4 @@
-package com.app.features.login.data.api
+package com.app.features.login.splash.data.api
 
 import com.app.commons.models.GenderResponse
 import retrofit2.Response

@@ -1,4 +1,4 @@
-package com.app.features.login.domain.repository
+package com.app.features.login.splash.domain.repository
 
 import com.app.commons.models.GendersList
 import kotlinx.coroutines.flow.Flow

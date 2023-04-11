@@ -34,16 +34,13 @@ import com.app.features.home.topRated.presentation.TopRatedViewModel
 import com.app.features.home.upcoming.domain.UpcomingUseCase
 import com.app.features.home.upcoming.presentation.UpcomingViewModel
 import com.app.features.home.watchList.presentation.WatchListViewModel
-import com.app.features.login.data.api.GenderService
-import com.app.features.login.data.google.LoginGoogle
-import com.app.features.login.data.mapper.GenderMapper
-import com.app.features.login.data.repository.GenderRepositoryImpl
-import com.app.features.login.data.repository.LoginRepository
-import com.app.features.login.domain.repository.GenderRepository
-import com.app.features.login.domain.usecases.GenderUseCase
-import com.app.features.login.domain.usecases.LoginUseCase
+import com.app.features.login.splash.data.api.GenderService
+import com.app.features.login.splash.data.mapper.GenderMapper
+import com.app.features.login.splash.data.repository.GenderRepositoryImpl
+import com.app.features.login.splash.domain.repository.GenderRepository
+import com.app.features.login.splash.domain.usecases.GenderUseCase
 import com.app.features.login.navigation.LoginNavigatorImpl
-import com.app.features.login.presentation.LoginViewModel
+import com.app.features.login.splash.presentation.SplashViewModel
 import com.app.network.utils.createHttpClient
 import com.app.network.utils.retrofitClient
 import com.example.navigation.DetailNavigator
@@ -74,13 +71,12 @@ class MainApplication : Application() {
         single { GenderListMapper() }
     }
     private val repositoryModule = module {
-        single<LoginRepository> { LoginGoogle() }
         single<HomeRepository> { HomeRepositoryImpl(get(), PopularMoviesMapper(get()), MoviesMapper(get()), SearchMapper(get())) }
         single<DetailRepository> { CastRepositoryImpl(get(), CastMapper()) }
         single<GenderRepository> { GenderRepositoryImpl(get(), GenderMapper()) }
     }
     private val loginModule = module {
-        viewModel { LoginViewModel(loginUseCase = LoginUseCase(repository = get()), genderUseCase = GenderUseCase(get())) }
+        viewModel { SplashViewModel(genderUseCase = GenderUseCase(get())) }
         viewModel { HomeViewModel(popularMoviesUseCase = HomeUseCase(repository = get()), searchMoviesUseCase = SearchUseCase(get())) }
         viewModel { NowPlayingViewModel(nowPlayingUseCase = NowPlayingUseCase(repository = get())) }
         viewModel { UpcomingViewModel(upcomingUseCase = UpcomingUseCase(repository = get())) }

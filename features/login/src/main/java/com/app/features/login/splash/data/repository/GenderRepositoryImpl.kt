@@ -1,9 +1,9 @@
-package com.app.features.login.data.repository
+package com.app.features.login.splash.data.repository
 
 import com.app.commons.models.GendersList
-import com.app.features.login.data.api.GenderService
-import com.app.features.login.data.mapper.GenderMapper
-import com.app.features.login.domain.repository.GenderRepository
+import com.app.features.login.splash.data.api.GenderService
+import com.app.features.login.splash.data.mapper.GenderMapper
+import com.app.features.login.splash.domain.repository.GenderRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
