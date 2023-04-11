@@ -2,7 +2,7 @@ package com.app.detail.main.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.app.commons.domain.dao.MovieDao
+import com.app.commons.room.MovieDao
 import com.app.commons.models.Movie
 import com.app.detail.main.domain.domain.UpdateMovie
 import kotlinx.coroutines.flow.MutableSharedFlow

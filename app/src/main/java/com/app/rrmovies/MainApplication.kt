@@ -2,8 +2,8 @@ package com.app.rrmovies
 
 import android.app.Application
 import androidx.room.Room
-import com.app.commons.data.MovieRoomDatabase
-import com.app.commons.domain.dao.MovieDao
+import com.app.commons.room.MovieRoomDatabase
+import com.app.commons.room.MovieDao
 import com.app.commons.gender.GenderListMapper
 import com.app.detail.cast.domain.usecase.CastUseCase
 import com.app.detail.cast.presentation.CastViewModel

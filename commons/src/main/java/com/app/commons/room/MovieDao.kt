@@ -1,4 +1,4 @@
-package com.app.commons.domain.dao
+package com.app.commons.room
 
 import androidx.room.*
 import com.app.commons.models.Movie

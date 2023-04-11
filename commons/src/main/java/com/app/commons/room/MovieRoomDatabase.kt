@@ -1,7 +1,6 @@
-package com.app.commons.data
+package com.app.commons.room
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.app.commons.domain.dao.MovieDao
 import com.app.commons.models.Movie
 
 

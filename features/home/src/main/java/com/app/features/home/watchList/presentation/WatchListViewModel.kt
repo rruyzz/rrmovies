@@ -2,7 +2,7 @@ package com.app.features.home.watchList.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.app.commons.domain.dao.MovieDao
+import com.app.commons.room.MovieDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
