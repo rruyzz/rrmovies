@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.features.login.login.domain.useCases.GoogleAuthenticationUseCase
 import com.app.features.login.login.domain.useCases.GoogleLoginUseCase
-import com.google.android.gms.common.api.ApiException
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -26,7 +25,7 @@ class LoginViewModel(
                 _loginState.emit(LoginAction.Loading(false))
             }
             .catch {
-                _loginState.emit(LoginAction.Error(it.message ?: "Error"))
+                catchResultException(it)
             }
             .collect {
                 _loginState.emit(LoginAction.Tap(it))
@@ -42,7 +41,7 @@ class LoginViewModel(
                 _loginState.emit(LoginAction.Loading(false))
             }
             .catch {
-                _loginState.emit(LoginAction.Error(it.message ?: "Error"))
+                catchResultException(it)
             }
             .collect {
                 if (it?.data != null) {
@@ -53,7 +52,7 @@ class LoginViewModel(
             }
     }
 
-    fun catchResultException(e: ApiException) = viewModelScope.launch {
+    fun catchResultException(e: Throwable) = viewModelScope.launch {
         _loginState.emit(LoginAction.Error(e.localizedMessage ?: "ERROR"))
     }
 }
