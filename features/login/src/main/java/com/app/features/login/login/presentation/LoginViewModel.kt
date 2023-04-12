@@ -18,16 +18,39 @@ class LoginViewModel(
     val loginState = _loginState.asSharedFlow()
 
     fun signInGoogle() = viewModelScope.launch {
-        _loginState.emit(LoginAction.Tap(googleLoginUseCase()))
+        googleLoginUseCase()
+            .onStart {
+                _loginState.emit(LoginAction.Loading(true))
+            }
+            .onCompletion {
+                _loginState.emit(LoginAction.Loading(false))
+            }
+            .catch {
+                _loginState.emit(LoginAction.Error(it.message ?: "Error"))
+            }
+            .collect {
+                _loginState.emit(LoginAction.Tap(it))
+            }
     }
 
     fun authenticate(intent: Intent?) = viewModelScope.launch {
-        val result = googleAuthenticationUseCase(intent)
-        if(result?.data != null) {
-            _loginState.emit(LoginAction.NavigateLogin)
-        } else {
-            _loginState.emit(LoginAction.Error(result?.errorMessage ?: "ERROR"))
-        }
+        googleAuthenticationUseCase(intent)
+            .onStart {
+                _loginState.emit(LoginAction.Loading(true))
+            }
+            .onCompletion {
+                _loginState.emit(LoginAction.Loading(false))
+            }
+            .catch {
+                _loginState.emit(LoginAction.Error(it.message ?: "Error"))
+            }
+            .collect {
+                if (it?.data != null) {
+                    _loginState.emit(LoginAction.NavigateLogin)
+                } else {
+                    _loginState.emit(LoginAction.Error(it?.errorMessage ?: "ERROR"))
+                }
+            }
     }
 
     fun catchResultException(e: ApiException) = viewModelScope.launch {

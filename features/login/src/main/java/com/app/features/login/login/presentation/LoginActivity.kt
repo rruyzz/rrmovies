@@ -37,7 +37,11 @@ class LoginActivity : AppCompatActivity() {
         hideStatusBar(window)
         setContentView(binding.root)
         observer()
-        binding.button.setOnClickListener {
+        setButton()
+    }
+
+    private fun setButton() = with(binding) {
+        button.setOnClickListener {
             viewModel.signInGoogle()
         }
     }
@@ -46,15 +50,19 @@ class LoginActivity : AppCompatActivity() {
         viewModel.loginState.collect {
             when (it) {
                 is LoginAction.NavigateLogin -> homeNavigator.navigate(this@LoginActivity)
-                is LoginAction.Error -> Toast.makeText(
-                    this@LoginActivity,
-                    it.message,
-                    Toast.LENGTH_SHORT
-                ).show()
+                is LoginAction.Error -> showToastError(it.message)
                 is LoginAction.Loading -> binding.progress.isVisible = it.isLoading
                 is LoginAction.Tap -> handleTap(it.tap)
             }
         }
+    }
+
+    private fun showToastError(error: String) {
+        Toast.makeText(
+            this@LoginActivity,
+            error,
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     private fun handleTap(intentSender: IntentSender?) {
