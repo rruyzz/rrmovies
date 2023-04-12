@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.app.commons.utils.hideStatusBar
 import com.app.features.login.databinding.ActivitySplashBinding
 import com.example.navigation.HomeNavigator
+import com.example.navigation.LoginNavigator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,7 +17,7 @@ class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
     private val viewModel: SplashViewModel by viewModel()
     private val collectingScope = CoroutineScope(Dispatchers.Default)
-    private val homeNavigator: HomeNavigator by inject()
+    private val homeNavigator: LoginNavigator by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +43,7 @@ class SplashActivity : AppCompatActivity() {
 
     private fun navigateMainActivity() {
         finishAffinity()
-        homeNavigator.navigate(this)
+        homeNavigator.navigateLogin(this)
     }
 
 }

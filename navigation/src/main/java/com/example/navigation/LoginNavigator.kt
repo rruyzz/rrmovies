@@ -4,4 +4,5 @@ import android.content.Context
 
 interface LoginNavigator {
     fun navigate(context: Context)
+    fun navigateLogin(context: Context)
 }

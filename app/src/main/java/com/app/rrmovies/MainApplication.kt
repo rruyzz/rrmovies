@@ -34,6 +34,12 @@ import com.app.features.home.topRated.presentation.TopRatedViewModel
 import com.app.features.home.upcoming.domain.UpcomingUseCase
 import com.app.features.home.upcoming.presentation.UpcomingViewModel
 import com.app.features.home.watchList.presentation.WatchListViewModel
+import com.app.features.login.login.data.google.GoogleAuth
+import com.app.features.login.login.data.repository.LoginRepositoryImpl
+import com.app.features.login.login.domain.repository.LoginRepository
+import com.app.features.login.login.domain.useCases.GoogleAuthenticationUseCase
+import com.app.features.login.login.domain.useCases.GoogleLoginUseCase
+import com.app.features.login.login.presentation.LoginViewModel
 import com.app.features.login.splash.data.api.GenderService
 import com.app.features.login.splash.data.mapper.GenderMapper
 import com.app.features.login.splash.data.repository.GenderRepositoryImpl
@@ -46,6 +52,8 @@ import com.app.network.utils.retrofitClient
 import com.example.navigation.DetailNavigator
 import com.example.navigation.HomeNavigator
 import com.example.navigation.LoginNavigator
+import com.google.android.gms.auth.api.identity.Identity
+import com.google.android.gms.auth.api.identity.SignInClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -74,9 +82,11 @@ class MainApplication : Application() {
         single<HomeRepository> { HomeRepositoryImpl(get(), PopularMoviesMapper(get()), MoviesMapper(get()), SearchMapper(get())) }
         single<DetailRepository> { CastRepositoryImpl(get(), CastMapper()) }
         single<GenderRepository> { GenderRepositoryImpl(get(), GenderMapper()) }
+        single<LoginRepository> { LoginRepositoryImpl(GoogleAuth(this@MainApplication, get())) }
     }
     private val loginModule = module {
         viewModel { SplashViewModel(genderUseCase = GenderUseCase(get())) }
+        viewModel { LoginViewModel(googleLoginUseCase = GoogleLoginUseCase(get()), googleAuthenticationUseCase = GoogleAuthenticationUseCase(get())) }
         viewModel { HomeViewModel(popularMoviesUseCase = HomeUseCase(repository = get()), searchMoviesUseCase = SearchUseCase(get())) }
         viewModel { NowPlayingViewModel(nowPlayingUseCase = NowPlayingUseCase(repository = get())) }
         viewModel { UpcomingViewModel(upcomingUseCase = UpcomingUseCase(repository = get())) }
@@ -107,8 +117,8 @@ class MainApplication : Application() {
             val database = get<MovieRoomDatabase>()
             database.dao
         }
-
-
+        single<SignInClient> {
+            Identity.getSignInClient(applicationContext)
+        }
     }
-
 }
