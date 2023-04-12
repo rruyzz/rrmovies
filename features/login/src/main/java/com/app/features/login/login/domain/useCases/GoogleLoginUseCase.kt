@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 class GoogleLoginUseCase(private val repository: LoginRepository) {
 
-    suspend operator fun invoke() : Flow<IntentSender?> {
+    suspend operator fun invoke() : Flow<IntentSender> {
         return repository.loginGoogle()
     }
 }

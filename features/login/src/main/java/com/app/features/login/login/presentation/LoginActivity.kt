@@ -65,9 +65,7 @@ class LoginActivity : AppCompatActivity() {
         ).show()
     }
 
-    private fun handleTap(intentSender: IntentSender?) {
-        intentSender?.let {
-            oneTapResult.launch(IntentSenderRequest.Builder(it).build())
-        }
+    private fun handleTap(intentSender: IntentSender) {
+        oneTapResult.launch(IntentSenderRequest.Builder(intentSender).build())
     }
 }

@@ -44,15 +44,11 @@ class LoginViewModel(
                 catchResultException(it)
             }
             .collect {
-                if (it?.data != null) {
-                    _loginState.emit(LoginAction.NavigateLogin)
-                } else {
-                    _loginState.emit(LoginAction.Error(it?.errorMessage ?: "ERROR"))
-                }
+                _loginState.emit(LoginAction.NavigateLogin)
             }
     }
 
     fun catchResultException(e: Throwable) = viewModelScope.launch {
-        _loginState.emit(LoginAction.Error(e.localizedMessage ?: "ERROR"))
+        _loginState.emit(LoginAction.Error(e.message ?: "ERROR"))
     }
 }

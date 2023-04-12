@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
 import com.app.features.login.R
-import com.app.features.login.login.domain.model.SignInResult
 import com.app.features.login.login.domain.model.UserData
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.SignInClient
@@ -21,38 +20,30 @@ class GoogleAuth(
 
     private val auth = Firebase.auth
 
-    suspend fun signInGoogleTap(): IntentSender? {
+    suspend fun signInGoogleTap(): IntentSender {
         val result = try {
             oneTapClient.beginSignIn(
                 buildSignInRequest()
             ).await()
         } catch (exception: Exception) {
-            if (exception is CancellationException) throw exception
-            null
+            throw exception
         }
-        return result?.pendingIntent?.intentSender
+        return result?.pendingIntent?.intentSender ?: throw NullPointerException()
     }
 
-    suspend fun signInWithIntent(intent: Intent?): SignInResult {
+    suspend fun signInWithIntent(intent: Intent?): UserData {
         return try {
             val credential = oneTapClient.getSignInCredentialFromIntent(intent)
             val googleIdToken = credential.googleIdToken
             val googleCredentials = GoogleAuthProvider.getCredential(googleIdToken, null)
             val user = auth.signInWithCredential(googleCredentials).await().user
-            SignInResult(
-                data = UserData(
-                    userId = user?.uid.orEmpty(),
-                    username = user?.displayName,
-                    profilePictureUrl = user?.photoUrl?.toString()
-                ),
-                errorMessage = null
+            UserData(
+                userId = user?.uid.orEmpty(),
+                username = user?.displayName,
+                profilePictureUrl = user?.photoUrl?.toString()
             )
-        } catch (e: Exception) {
-            if (e is CancellationException) throw e
-            SignInResult(
-                data = null,
-                errorMessage = e.message
-            )
+        } catch (exception: Exception) {
+            throw exception
         }
     }
 
