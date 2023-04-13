@@ -1,12 +1,15 @@
 package com.app.features.login.login.presentation
 
 import android.content.IntentSender
+import android.graphics.RenderEffect
+import android.graphics.Shader
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.view.isVisible
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.lifecycleScope
 import com.app.commons.utils.hideStatusBar
 import com.app.features.login.databinding.ActivityLoginBinding
@@ -30,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
                 viewModel.catchResultException(e)
             }
         }
-
+    @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -38,12 +41,20 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         observer()
         setButton()
+        setBlur()
     }
 
     private fun setButton() = with(binding) {
-        button.setOnClickListener {
-            viewModel.signInGoogle()
-        }
+//        button.setOnClickListener {
+//            viewModel.signInGoogle()
+//        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.S)
+    private fun setBlur() {
+        binding.icSplash.setRenderEffect(
+            RenderEffect.createBlurEffect(60f, 10f, Shader.TileMode.MIRROR)
+        )
     }
 
     private fun observer() = lifecycleScope.launch {
@@ -51,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
             when (it) {
                 is LoginAction.NavigateLogin -> homeNavigator.navigate(this@LoginActivity)
                 is LoginAction.Error -> showToastError(it.message)
-                is LoginAction.Loading -> binding.progress.isVisible = it.isLoading
+                is LoginAction.Loading -> {}
                 is LoginAction.Tap -> handleTap(it.tap)
             }
         }
