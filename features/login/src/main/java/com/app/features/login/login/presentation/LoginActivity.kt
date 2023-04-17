@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.app.commons.utils.hideStatusBar
 import com.app.features.login.databinding.ActivityLoginBinding
@@ -41,7 +42,10 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         observer()
         setButton()
-        setBlur()
+        binding.icSplash.setRenderEffect(
+            RenderEffect.createBlurEffect(40f, 40f, Shader.TileMode.MIRROR)
+        )
+//        setBlur()
     }
 
     private fun setButton() = with(binding) {
@@ -52,9 +56,13 @@ class LoginActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.S)
     private fun setBlur() {
-        binding.icSplash.setRenderEffect(
-            RenderEffect.createBlurEffect(60f, 10f, Shader.TileMode.MIRROR)
-        )
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
+            binding.icSplash.setRenderEffect(
+                RenderEffect.createBlurEffect(40f, 40f, Shader.TileMode.REPEAT)
+            )
+        } else {
+            binding.icSplash.isVisible = false
+        }
     }
 
     private fun observer() = lifecycleScope.launch {

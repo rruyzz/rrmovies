@@ -24,3 +24,5 @@
     </application>
 
 </manifest>
+<!--    android:name="com.app.features.login.splash.presentation.SplashActivity"-->
+<!--    android:name="com.app.features.login.login.presentation.LoginActivity"-->
