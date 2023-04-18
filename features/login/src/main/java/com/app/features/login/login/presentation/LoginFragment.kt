@@ -67,10 +67,10 @@ class LoginFragment : Fragment() {
 //            viewModel.signInGoogle()
         }
         signUp.setOnClickListener {
-            navigation.navigate(LoginFragmentDirections.actionLoginFragmentToSignInFragment())
+            navigation.navigate(LoginFragmentDirections.actionLoginFragmentToSignUpFragment(binding.textInputEmail.text.toString()))
         }
         buttonContinue.setOnClickListener {
-            navigation.navigate(LoginFragmentDirections.actionLoginFragmentToSignUpFragment())
+            navigation.navigate(LoginFragmentDirections.actionLoginFragmentToSignInFragment())
         }
     }
 

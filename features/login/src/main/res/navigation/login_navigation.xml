@@ -34,5 +34,9 @@
         android:id="@+id/signUpFragment"
         android:name="com.app.features.login.signup.presentation.SignUpFragment"
         android:label="SignUpFragment"
-        tools:layout="@layout/fragment_sign_up"/>
+        tools:layout="@layout/fragment_sign_up">
+        <argument
+            android:name="email"
+            app:argType="string" />
+    </fragment>
 </navigation>
