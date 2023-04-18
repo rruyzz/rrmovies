@@ -14,7 +14,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/poppins_regular"
-        android:text="Hi!"
+        android:text="LogIn"
         android:textColor="@color/white"
         android:textSize="22sp"
         android:textStyle="bold"
@@ -74,83 +74,17 @@
             app:layout_constraintTop_toBottomOf="@id/textField" />
 
         <TextView
-            android:id="@+id/textOr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:fontFamily="@font/poppins_regular"
-            android:text="or"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@id/buttonContinue"
-            app:layout_constraintStart_toStartOf="@id/buttonContinue"
-            app:layout_constraintTop_toBottomOf="@id/buttonContinue"
-            app:layout_constraintVertical_chainStyle="packed" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonFacebook"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:backgroundTint="@color/white"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:text="Continue with Facebook"
-            android:textAllCaps="false"
-            android:textColor="@color/dark_blue"
-            app:cornerRadius="8dp"
-            app:icon="@drawable/ic_facebook"
-            app:iconGravity="textStart"
-            app:iconTint="@color/dark_blue"
-            app:layout_constraintEnd_toEndOf="@id/textField"
-            app:layout_constraintStart_toStartOf="@id/textField"
-            app:layout_constraintTop_toBottomOf="@id/textOr" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonGoogle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="16dp"
-            android:backgroundTint="@color/white"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:text="Continue with Google"
-            android:textAllCaps="false"
-            android:textColor="@color/dark_blue"
-            app:cornerRadius="8dp"
-            app:icon="@drawable/ic_google"
-            app:iconGravity="textStart"
-            app:iconTint="@color/dark_blue"
-            app:layout_constraintEnd_toEndOf="@id/buttonFacebook"
-            app:layout_constraintStart_toStartOf="@id/buttonFacebook"
-            app:layout_constraintTop_toBottomOf="@id/buttonFacebook" />
-
-        <TextView
-            android:id="@+id/signUp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:fontFamily="@font/poppins_regular"
-            android:text="Dont have an account? Sign up"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/buttonGoogle"
-            app:layout_constraintVertical_chainStyle="packed" />
-
-        <TextView
             android:id="@+id/forgetPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_marginVertical="16dp"
             android:fontFamily="@font/poppins_regular"
             android:text="Forgot your password?"
             android:textColor="@color/white"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/signUp"
+            app:layout_constraintStart_toStartOf="@id/buttonContinue"
+            app:layout_constraintTop_toBottomOf="@id/buttonContinue"
             app:layout_constraintVertical_chainStyle="packed" />
 
         <ProgressBar

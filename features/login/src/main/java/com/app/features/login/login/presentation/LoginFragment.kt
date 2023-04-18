@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.app.features.login.databinding.FragmentLoginBinding
 import com.example.navigation.HomeNavigator
 import com.google.android.gms.common.api.ApiException
@@ -31,6 +32,8 @@ class LoginFragment : Fragment() {
                 viewModel.catchResultException(e)
             }
         }
+    private val navigation get() = findNavController()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -60,7 +63,14 @@ class LoginFragment : Fragment() {
     }
     private fun setButton() = with(binding) {
         buttonGoogle.setOnClickListener {
-            viewModel.signInGoogle()
+            homeNavigator.navigate(requireContext())
+//            viewModel.signInGoogle()
+        }
+        signUp.setOnClickListener {
+            navigation.navigate(LoginFragmentDirections.actionLoginFragmentToSignInFragment())
+        }
+        buttonContinue.setOnClickListener {
+            navigation.navigate(LoginFragmentDirections.actionLoginFragmentToSignUpFragment())
         }
     }
 
