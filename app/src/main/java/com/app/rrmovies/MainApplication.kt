@@ -46,6 +46,11 @@ import com.app.features.login.splash.data.repository.GenderRepositoryImpl
 import com.app.features.login.splash.domain.repository.GenderRepository
 import com.app.features.login.splash.domain.usecases.GenderUseCase
 import com.app.features.login.navigation.LoginNavigatorImpl
+import com.app.features.login.signup.data.firebaseSignup.SignUpAuth
+import com.app.features.login.signup.data.repository.SignUpRepositoryImpl
+import com.app.features.login.signup.domain.repository.SignUpRepository
+import com.app.features.login.signup.domain.usecase.SignUpUseCase
+import com.app.features.login.signup.presentation.SignUpViewModel
 import com.app.features.login.splash.presentation.SplashViewModel
 import com.app.network.utils.createHttpClient
 import com.app.network.utils.retrofitClient
@@ -83,9 +88,11 @@ class MainApplication : Application() {
         single<DetailRepository> { CastRepositoryImpl(get(), CastMapper()) }
         single<GenderRepository> { GenderRepositoryImpl(get(), GenderMapper()) }
         single<LoginRepository> { LoginRepositoryImpl(GoogleAuth(this@MainApplication, get())) }
+        single<SignUpRepository> { SignUpRepositoryImpl(SignUpAuth()) }
     }
     private val loginModule = module {
         viewModel { SplashViewModel(genderUseCase = GenderUseCase(get())) }
+        viewModel { SignUpViewModel(signUpUseCase = SignUpUseCase(get())) }
         viewModel { LoginViewModel(googleLoginUseCase = GoogleLoginUseCase(get()), googleAuthenticationUseCase = GoogleAuthenticationUseCase(get())) }
         viewModel { HomeViewModel(popularMoviesUseCase = HomeUseCase(repository = get()), searchMoviesUseCase = SearchUseCase(get())) }
         viewModel { NowPlayingViewModel(nowPlayingUseCase = NowPlayingUseCase(repository = get())) }
