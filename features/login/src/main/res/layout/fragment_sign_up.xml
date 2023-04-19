@@ -67,6 +67,7 @@
                 android:id="@+id/textInputEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/dark_blue"
                 android:background="@drawable/background_input_layout"
                 android:textCursorDrawable="@color/dark_blue" />
 
@@ -91,6 +92,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
+                android:textColor="@color/dark_blue"
                 android:background="@drawable/background_input_layout"
                 android:textCursorDrawable="@color/dark_blue" />
 
