@@ -4,5 +4,6 @@ import com.google.firebase.auth.AuthResult
 import kotlinx.coroutines.flow.Flow
 
 interface SignUpRepository {
-    fun signUp(email: String, password: String): Flow<AuthResult>
+    fun createUser(email: String, password: String): Flow<AuthResult>
+    fun loginEmail(email: String, password: String): Flow<AuthResult>
 }

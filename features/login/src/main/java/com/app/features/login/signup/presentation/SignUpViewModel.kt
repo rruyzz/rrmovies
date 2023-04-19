@@ -2,20 +2,20 @@ package com.app.features.login.signup.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.app.features.login.signup.domain.usecase.SignUpUseCase
+import com.app.features.login.signup.domain.usecase.CreateUserUseCase
 import com.google.firebase.auth.AuthResult
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class SignUpViewModel(
-    private val signUpUseCase: SignUpUseCase
+    private val createUserUseCase: CreateUserUseCase
 ) : ViewModel() {
 
     private val _signUpState = MutableSharedFlow<SignUpState>(0)
     val signUpState = _signUpState.asSharedFlow()
 
     fun signUp(email: String, password: String) = viewModelScope.launch {
-        signUpUseCase(email, password)
+        createUserUseCase(email, password)
             .onStart {
                 _signUpState.emit(SignUpState.Loading(true))
             }

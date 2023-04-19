@@ -13,6 +13,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.app.features.login.databinding.FragmentLoginBinding
+import com.app.features.login.utils.safeNavigate
 import com.example.navigation.HomeNavigator
 import com.google.android.gms.common.api.ApiException
 import kotlinx.coroutines.launch
@@ -59,6 +60,8 @@ class LoginFragment : Fragment() {
                 is LoginAction.Error -> showToastError(it.message)
                 is LoginAction.Loading -> renderLoading(it.isLoading)
                 is LoginAction.Tap -> handleTap(it.tap)
+                is LoginAction.NavigateCreateAccount -> navigateCreateAccount()
+                is LoginAction.NavigatePassword -> navigateSignIn()
             }
         }
     }
@@ -78,11 +81,32 @@ class LoginFragment : Fragment() {
             viewModel.signInGoogle()
         }
         signUp.setOnClickListener {
-            navigation.navigate(LoginFragmentDirections.actionLoginFragmentToSignUpFragment(binding.textInputEmail.text.toString()))
+            navigation.safeNavigate(
+                LoginFragmentDirections.actionLoginFragmentToSignUpFragment(
+                    binding.textInputEmail.text.toString()
+                )
+            )
         }
         buttonContinue.setOnClickListener {
-            navigation.navigate(LoginFragmentDirections.actionLoginFragmentToSignInFragment())
+            viewModel.signUp(binding.textInputEmail.text.toString())
+//            navigation.navigate(LoginFragmentDirections.actionLoginFragmentToSignInFragment())
         }
+    }
+
+    private fun navigateCreateAccount() {
+        navigation.safeNavigate(
+            LoginFragmentDirections.actionLoginFragmentToSignInFragment(
+                binding.textInputEmail.text.toString()
+            )
+        )
+    }
+
+    private fun navigateSignIn() {
+        navigation.safeNavigate(
+            LoginFragmentDirections.actionLoginFragmentToSignUpFragment(
+                binding.textInputEmail.text.toString()
+            )
+        )
     }
 
     private fun showToastError(error: String) {

@@ -9,9 +9,18 @@ class SignUpAuth {
 
     private var auth = Firebase.auth
 
-    suspend fun signUp(email: String, password: String): AuthResult {
+    suspend fun createUser(email: String, password: String): AuthResult {
         val something: AuthResult = try {
             auth.createUserWithEmailAndPassword(email, password).await()
+        } catch (exception: Exception) {
+            throw exception
+        }
+        return something
+    }
+
+    suspend fun loginEmail(email: String, password: String): AuthResult {
+        val something: AuthResult = try {
+            auth.signInWithEmailAndPassword(email, password).await()
         } catch (exception: Exception) {
             throw exception
         }

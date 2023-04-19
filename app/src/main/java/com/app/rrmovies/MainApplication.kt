@@ -46,10 +46,12 @@ import com.app.features.login.splash.data.repository.GenderRepositoryImpl
 import com.app.features.login.splash.domain.repository.GenderRepository
 import com.app.features.login.splash.domain.usecases.GenderUseCase
 import com.app.features.login.navigation.LoginNavigatorImpl
+import com.app.features.login.signin.domain.SignInUseCase
+import com.app.features.login.signin.presentation.SignInViewModel
 import com.app.features.login.signup.data.firebaseSignup.SignUpAuth
 import com.app.features.login.signup.data.repository.SignUpRepositoryImpl
 import com.app.features.login.signup.domain.repository.SignUpRepository
-import com.app.features.login.signup.domain.usecase.SignUpUseCase
+import com.app.features.login.signup.domain.usecase.CreateUserUseCase
 import com.app.features.login.signup.presentation.SignUpViewModel
 import com.app.features.login.splash.presentation.SplashViewModel
 import com.app.network.utils.createHttpClient
@@ -92,8 +94,9 @@ class MainApplication : Application() {
     }
     private val loginModule = module {
         viewModel { SplashViewModel(genderUseCase = GenderUseCase(get())) }
-        viewModel { SignUpViewModel(signUpUseCase = SignUpUseCase(get())) }
-        viewModel { LoginViewModel(googleLoginUseCase = GoogleLoginUseCase(get()), googleAuthenticationUseCase = GoogleAuthenticationUseCase(get())) }
+        viewModel { SignUpViewModel(createUserUseCase = get()) }
+        viewModel { SignInViewModel(signInUseCase = get()) }
+        viewModel { LoginViewModel(googleLoginUseCase = GoogleLoginUseCase(get()), googleAuthenticationUseCase = GoogleAuthenticationUseCase(get()), createUserUseCase = get()) }
         viewModel { HomeViewModel(popularMoviesUseCase = HomeUseCase(repository = get()), searchMoviesUseCase = SearchUseCase(get())) }
         viewModel { NowPlayingViewModel(nowPlayingUseCase = NowPlayingUseCase(repository = get())) }
         viewModel { UpcomingViewModel(upcomingUseCase = UpcomingUseCase(repository = get())) }
@@ -113,6 +116,8 @@ class MainApplication : Application() {
         single(createdAtStart = false) { get<Retrofit>().create(HomeService::class.java) }
         single(createdAtStart = false) { get<Retrofit>().create(DetailService::class.java) }
         single(createdAtStart = false) { get<Retrofit>().create(GenderService::class.java) }
+        single { CreateUserUseCase(get()) }
+        single { SignInUseCase(get()) }
         single {
             Room.databaseBuilder(
                 applicationContext,

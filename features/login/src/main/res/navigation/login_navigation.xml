@@ -29,7 +29,11 @@
         android:id="@+id/signInFragment"
         android:name="com.app.features.login.signin.presentation.SignInFragment"
         android:label="fragment_sign_in"
-        tools:layout="@layout/fragment_sign_in" />
+        tools:layout="@layout/fragment_sign_in" >
+        <argument
+            android:name="email"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.app.features.login.signup.presentation.SignUpFragment"

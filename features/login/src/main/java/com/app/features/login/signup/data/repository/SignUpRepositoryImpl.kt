@@ -10,9 +10,15 @@ class SignUpRepositoryImpl(
     private val singUpAuth: SignUpAuth
 ) : SignUpRepository {
 
-    override fun signUp(email: String, password: String): Flow<AuthResult> {
+    override fun createUser(email: String, password: String): Flow<AuthResult> {
         return flow {
-            emit(singUpAuth.signUp(email, password))
+            emit(singUpAuth.createUser(email, password))
+        }
+    }
+
+    override fun loginEmail(email: String, password: String): Flow<AuthResult> {
+        return flow {
+            emit(singUpAuth.loginEmail(email, password))
         }
     }
 }

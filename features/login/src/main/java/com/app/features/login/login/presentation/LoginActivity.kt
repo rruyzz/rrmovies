@@ -72,6 +72,8 @@ class LoginActivity : AppCompatActivity() {
                 is LoginAction.Error -> showToastError(it.message)
                 is LoginAction.Loading -> {}
                 is LoginAction.Tap -> handleTap(it.tap)
+                is LoginAction.NavigateCreateAccount -> {}
+                is LoginAction.NavigatePassword -> {}
             }
         }
     }
