@@ -20,6 +20,7 @@ import com.app.features.home.popularMovies.presentation.PopularMoviesFragment
 import com.app.features.home.topRated.presentation.TopRatedFragment
 import com.app.features.home.upcoming.presentation.UpcomingFragment
 import com.example.navigation.DetailNavigator
+import com.example.navigation.LoginNavigator
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -31,6 +32,7 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: HomeViewModel by viewModel()
     private val detailNavigator: DetailNavigator by inject()
+    private val loginNavigator: LoginNavigator by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,6 +60,10 @@ class HomeFragment : Fragment() {
                 }
                 is HomeState.Error -> {
                     renderError(state.error)
+                }
+                is HomeState.FinishAffinity -> {
+                    requireActivity().finishAffinity()
+                    loginNavigator.navigate(requireContext())
                 }
             }
         }
@@ -100,6 +106,9 @@ class HomeFragment : Fragment() {
                 return false
             }
         })
+        binding.textView.setOnClickListener {
+            viewModel.signOut()
+        }
     }
     private fun setAdapter() {
         val adapter = MoviesListAdapter(parentFragmentManager, lifecycle)

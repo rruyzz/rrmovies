@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.features.home.home.domain.usecase.HomeUseCase
 import com.app.features.home.search.domain.usecase.SearchUseCase
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -18,6 +20,11 @@ class HomeViewModel(
 
     init {
         getPopularMovies()
+    }
+
+    fun signOut() = viewModelScope.launch(Dispatchers.IO) {
+        Firebase.auth.signOut()
+        _popularMoviesState.emit(HomeState.FinishAffinity)
     }
     fun getPopularMovies() = viewModelScope.launch(Dispatchers.IO) {
         popularMoviesUseCase()

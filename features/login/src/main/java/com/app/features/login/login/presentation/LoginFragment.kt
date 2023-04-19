@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.app.features.login.databinding.FragmentLoginBinding
@@ -54,17 +55,27 @@ class LoginFragment : Fragment() {
     private fun observer() = lifecycleScope.launch {
         viewModel.loginState.collect {
             when (it) {
-                is LoginAction.NavigateLogin -> homeNavigator.navigate(requireContext())
+                is LoginAction.NavigateLogin -> navigateHome()
                 is LoginAction.Error -> showToastError(it.message)
-                is LoginAction.Loading -> {}
+                is LoginAction.Loading -> renderLoading(it.isLoading)
                 is LoginAction.Tap -> handleTap(it.tap)
             }
         }
     }
+
+    private fun navigateHome() {
+        requireActivity().finishAffinity()
+        homeNavigator.navigate(requireContext())
+    }
+
+    private fun renderLoading(isLoading: Boolean) {
+        binding.progress.isVisible = isLoading
+    }
+
     private fun setButton() = with(binding) {
         buttonGoogle.setOnClickListener {
-            homeNavigator.navigate(requireContext())
-//            viewModel.signInGoogle()
+//            homeNavigator.navigate(requireContext())
+            viewModel.signInGoogle()
         }
         signUp.setOnClickListener {
             navigation.navigate(LoginFragmentDirections.actionLoginFragmentToSignUpFragment(binding.textInputEmail.text.toString()))

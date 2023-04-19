@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.commons.gender.Genders
 import com.app.features.login.splash.domain.usecases.GenderUseCase
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -17,22 +19,31 @@ class SplashViewModel(
     val fetchResult = _fetchResult.asSharedFlow()
     private val emittingScope = CoroutineScope(Dispatchers.IO)
     val action = MutableSharedFlow<SplashAction>()
+    private val user = Firebase.auth.currentUser
 
     init {
         fetchGenders()
     }
+
     private fun fetchGenders() = viewModelScope.launch(Dispatchers.IO) {
         genderUseCase()
             .flowOn(Dispatchers.IO)
             .onStart { _fetchResult.emit(true) }
             .onCompletion {
-                action.emit(SplashAction.Navigate)
+                handleSuccess()
             }
             .collect {
                 Genders.setList(it)
             }
     }
+
+    private fun handleSuccess() = emittingScope.launch {
+        if (user != null) action.emit(SplashAction.NavigateHome)
+        else action.emit(SplashAction.NavigateLogin)
+    }
+
     fun onButtonClick() = emittingScope.launch {
-        action.emit(SplashAction.Navigate)
+        if (user != null) action.emit(SplashAction.NavigateHome)
+        else action.emit(SplashAction.NavigateLogin)
     }
 }

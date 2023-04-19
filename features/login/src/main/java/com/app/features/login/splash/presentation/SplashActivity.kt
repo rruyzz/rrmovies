@@ -17,7 +17,8 @@ class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
     private val viewModel: SplashViewModel by viewModel()
     private val collectingScope = CoroutineScope(Dispatchers.Default)
-    private val homeNavigator: LoginNavigator by inject()
+    private val loginNavigator: LoginNavigator by inject()
+    private val homeNavigator: HomeNavigator by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +32,8 @@ class SplashActivity : AppCompatActivity() {
     private fun actionObserver() = collectingScope.launch {
         viewModel.action.collect{ action ->
             when(action) {
-                is SplashAction.Navigate -> navigateMainActivity()
+                is SplashAction.NavigateHome -> navigateHome()
+                is SplashAction.NavigateLogin -> navigateLogin()
             }
         }
     }
@@ -41,9 +43,14 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
-    private fun navigateMainActivity() {
+    private fun navigateHome() {
         finishAffinity()
-        homeNavigator.navigateLogin(this)
+        homeNavigator.navigate(this)
+    }
+
+    private fun navigateLogin() {
+        finishAffinity()
+        loginNavigator.navigateLogin(this)
     }
 
 }
