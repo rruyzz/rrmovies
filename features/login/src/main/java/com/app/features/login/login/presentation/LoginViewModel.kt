@@ -5,22 +5,21 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.features.login.login.domain.useCases.GoogleAuthenticationUseCase
 import com.app.features.login.login.domain.useCases.GoogleLoginUseCase
-import com.app.features.login.signup.domain.usecase.CreateUserUseCase
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.app.features.login.login.domain.useCases.ValidateEmailUseCase
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
     private val googleLoginUseCase: GoogleLoginUseCase,
-    private val createUserUseCase: CreateUserUseCase,
+    private val validateEmailUseCase: ValidateEmailUseCase,
     private val googleAuthenticationUseCase: GoogleAuthenticationUseCase
 ) : ViewModel() {
 
     private val _loginState = MutableSharedFlow<LoginAction>(0)
     val loginState = _loginState.asSharedFlow()
 
-    fun signUp(email: String, password: String = "123456") = viewModelScope.launch {
-        createUserUseCase(email, password)
+    fun signUp(email: String) = viewModelScope.launch {
+        validateEmailUseCase(email)
             .onStart {
                 _loginState.emit(LoginAction.Loading(true))
             }
@@ -28,24 +27,16 @@ class LoginViewModel(
                 _loginState.emit(LoginAction.Loading(false))
             }
             .catch {
-                handleError(it)
+                catchResultException(it)
             }
             .collect {
-                _loginState.emit(LoginAction.NavigateLogin)
+                handleSuccess(it)
             }
     }
 
-    private fun handleError(it: Throwable) = viewModelScope.launch {
-        if (it.isEmailAlreadyInUse()) _loginState.emit(LoginAction.NavigatePassword)
+    private fun handleSuccess(emailLogged: Boolean) = viewModelScope.launch {
+        if (emailLogged) _loginState.emit(LoginAction.NavigatePassword)
         else _loginState.emit(LoginAction.NavigateCreateAccount)
-    }
-
-    private fun Throwable.isEmailAlreadyInUse(): Boolean {
-        return try {
-            this == (this as FirebaseAuthUserCollisionException).zzc("ERROR_EMAIL_ALREADY_IN_USE")
-        } catch (e: Exception) {
-            false
-        }
     }
 
     fun signInGoogle() = viewModelScope.launch {

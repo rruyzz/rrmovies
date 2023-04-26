@@ -1,6 +1,7 @@
 package com.app.features.login.signup.data.firebaseSignup
 
 import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.SignInMethodQueryResult
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
@@ -21,6 +22,15 @@ class SignUpAuth {
     suspend fun loginEmail(email: String, password: String): AuthResult {
         val something: AuthResult = try {
             auth.signInWithEmailAndPassword(email, password).await()
+        } catch (exception: Exception) {
+            throw exception
+        }
+        return something
+    }
+
+    suspend fun validateEmail(email: String): SignInMethodQueryResult {
+        val something: SignInMethodQueryResult = try {
+            auth.fetchSignInMethodsForEmail(email).await()
         } catch (exception: Exception) {
             throw exception
         }

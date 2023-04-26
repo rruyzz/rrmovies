@@ -39,6 +39,7 @@ import com.app.features.login.login.data.repository.LoginRepositoryImpl
 import com.app.features.login.login.domain.repository.LoginRepository
 import com.app.features.login.login.domain.useCases.GoogleAuthenticationUseCase
 import com.app.features.login.login.domain.useCases.GoogleLoginUseCase
+import com.app.features.login.login.domain.useCases.ValidateEmailUseCase
 import com.app.features.login.login.presentation.LoginViewModel
 import com.app.features.login.splash.data.api.GenderService
 import com.app.features.login.splash.data.mapper.GenderMapper
@@ -75,9 +76,18 @@ class MainApplication : Application() {
         startKoin {
             androidLogger()
             androidContext(this@MainApplication)
-            modules(listOf(loginModule, navigationModule, repositoryModule, retrofitModule, apiModule))
+            modules(
+                listOf(
+                    loginModule,
+                    navigationModule,
+                    repositoryModule,
+                    retrofitModule,
+                    apiModule
+                )
+            )
         }
     }
+
     private val navigationModule = module {
         single<LoginNavigator> { LoginNavigatorImpl() }
         single<HomeNavigator> { HomeNavigatorImpl() }
@@ -86,7 +96,14 @@ class MainApplication : Application() {
         single { GenderListMapper() }
     }
     private val repositoryModule = module {
-        single<HomeRepository> { HomeRepositoryImpl(get(), PopularMoviesMapper(get()), MoviesMapper(get()), SearchMapper(get())) }
+        single<HomeRepository> {
+            HomeRepositoryImpl(
+                get(),
+                PopularMoviesMapper(get()),
+                MoviesMapper(get()),
+                SearchMapper(get())
+            )
+        }
         single<DetailRepository> { CastRepositoryImpl(get(), CastMapper()) }
         single<GenderRepository> { GenderRepositoryImpl(get(), GenderMapper()) }
         single<LoginRepository> { LoginRepositoryImpl(GoogleAuth(this@MainApplication, get())) }
@@ -96,8 +113,19 @@ class MainApplication : Application() {
         viewModel { SplashViewModel(genderUseCase = GenderUseCase(get())) }
         viewModel { SignUpViewModel(createUserUseCase = get()) }
         viewModel { SignInViewModel(signInUseCase = get()) }
-        viewModel { LoginViewModel(googleLoginUseCase = GoogleLoginUseCase(get()), googleAuthenticationUseCase = GoogleAuthenticationUseCase(get()), createUserUseCase = get()) }
-        viewModel { HomeViewModel(popularMoviesUseCase = HomeUseCase(repository = get()), searchMoviesUseCase = SearchUseCase(get())) }
+        viewModel {
+            LoginViewModel(
+                googleLoginUseCase = GoogleLoginUseCase(get()),
+                googleAuthenticationUseCase = GoogleAuthenticationUseCase(get()),
+                validateEmailUseCase = ValidateEmailUseCase(get()),
+            )
+        }
+        viewModel {
+            HomeViewModel(
+                popularMoviesUseCase = HomeUseCase(repository = get()),
+                searchMoviesUseCase = SearchUseCase(get())
+            )
+        }
         viewModel { NowPlayingViewModel(nowPlayingUseCase = NowPlayingUseCase(repository = get())) }
         viewModel { UpcomingViewModel(upcomingUseCase = UpcomingUseCase(repository = get())) }
         viewModel { TopRatedViewModel(topRatedUseCase = TopRatedUseCase(repository = get())) }
@@ -108,9 +136,9 @@ class MainApplication : Application() {
         viewModel { DetailViewModel(dao = get()) }
         viewModel { WatchListViewModel(dao = get()) }
     }
-    private val retrofitModule = module{
+    private val retrofitModule = module {
         single { createHttpClient() }
-        single { retrofitClient(get())}
+        single { retrofitClient(get()) }
     }
     private val apiModule = module {
         single(createdAtStart = false) { get<Retrofit>().create(HomeService::class.java) }
