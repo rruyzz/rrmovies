@@ -18,7 +18,7 @@ class LoginViewModel(
     private val _loginState = MutableSharedFlow<LoginAction>(0)
     val loginState = _loginState.asSharedFlow()
 
-    fun signUp(email: String) = viewModelScope.launch {
+    fun validateEmail(email: String) = viewModelScope.launch {
         validateEmailUseCase(email)
             .onStart {
                 _loginState.emit(LoginAction.Loading(true))
@@ -29,13 +29,13 @@ class LoginViewModel(
             .catch {
                 catchResultException(it)
             }
-            .collect {
-                handleSuccess(it)
+            .collect { isEmailLogged ->
+                handleSuccess(isEmailLogged)
             }
     }
 
-    private fun handleSuccess(emailLogged: Boolean) = viewModelScope.launch {
-        if (emailLogged) _loginState.emit(LoginAction.NavigatePassword)
+    private fun handleSuccess(isEmailLogged: Boolean) = viewModelScope.launch {
+        if (isEmailLogged) _loginState.emit(LoginAction.NavigatePassword)
         else _loginState.emit(LoginAction.NavigateCreateAccount)
     }
 

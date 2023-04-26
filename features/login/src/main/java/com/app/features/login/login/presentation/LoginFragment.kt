@@ -88,7 +88,7 @@ class LoginFragment : Fragment() {
             )
         }
         buttonContinue.setOnClickListener {
-            viewModel.signUp(binding.textInputEmail.text.toString())
+            viewModel.validateEmail(binding.textInputEmail.text.toString())
 //            navigation.navigate(LoginFragmentDirections.actionLoginFragmentToSignInFragment())
         }
     }
