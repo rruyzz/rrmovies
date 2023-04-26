@@ -82,7 +82,8 @@ class LoginFragment : Fragment() {
         signUp.setOnClickListener {
             navigation.safeNavigate(
                 LoginFragmentDirections.actionLoginFragmentToSignUpFragment(
-                    binding.textInputEmail.text.toString()
+                    binding.textInputEmail.text.toString(),
+                    true
                 )
             )
         }
@@ -102,7 +103,8 @@ class LoginFragment : Fragment() {
     private fun navigateSignIn() {
         navigation.safeNavigate(
             LoginFragmentDirections.actionLoginFragmentToSignUpFragment(
-                binding.textInputEmail.text.toString()
+                binding.textInputEmail.text.toString(),
+                false
             )
         )
     }

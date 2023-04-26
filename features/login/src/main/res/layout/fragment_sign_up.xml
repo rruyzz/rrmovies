@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:fontFamily="@font/poppins_regular"
-            android:text="Looks like you don't have an account. Let's create a new account for janedoe@gmail.com"
+            android:text="Looks like you don't have an account. Let's create a new account for you"
             android:textColor="@color/white"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"

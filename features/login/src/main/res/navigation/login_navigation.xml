@@ -42,5 +42,8 @@
         <argument
             android:name="email"
             app:argType="string" />
+        <argument
+            android:name="shouldEnable"
+            app:argType="boolean" />
     </fragment>
 </navigation>

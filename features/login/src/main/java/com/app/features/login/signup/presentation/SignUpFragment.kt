@@ -20,13 +20,14 @@ class SignUpFragment : Fragment() {
     private lateinit var binding: FragmentSignUpBinding
     private val args by navArgs<SignUpFragmentArgs>()
     private val email get() = args.email
+    private val shouldEnable get() = args.shouldEnable
     private val viewModel: SignUpViewModel by viewModel()
     private val homeNavigator: HomeNavigator by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentSignUpBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -39,6 +40,7 @@ class SignUpFragment : Fragment() {
 
     private fun setButton() = with(binding) {
         textInputEmail.setText(email)
+        textFieldEmail.isEnabled = shouldEnable
         buttonContinue.setOnClickListener {
             viewModel.signUp(textInputEmail.text.toString(), textInputPassword.text.toString())
         }
