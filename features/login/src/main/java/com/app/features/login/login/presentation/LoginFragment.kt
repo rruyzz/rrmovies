@@ -77,7 +77,6 @@ class LoginFragment : Fragment() {
 
     private fun setButton() = with(binding) {
         buttonGoogle.setOnClickListener {
-//            homeNavigator.navigate(requireContext())
             viewModel.signInGoogle()
         }
         signUp.setOnClickListener {
@@ -89,7 +88,6 @@ class LoginFragment : Fragment() {
         }
         buttonContinue.setOnClickListener {
             viewModel.validateEmail(binding.textInputEmail.text.toString())
-//            navigation.navigate(LoginFragmentDirections.actionLoginFragmentToSignInFragment())
         }
     }
 
