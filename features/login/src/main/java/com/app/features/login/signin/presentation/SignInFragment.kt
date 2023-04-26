@@ -9,12 +9,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
-import com.app.features.login.R
-import com.app.features.login.databinding.FragmentLoginBinding
 import com.app.features.login.databinding.FragmentSignInBinding
-import com.app.features.login.login.presentation.LoginViewModel
-import com.app.features.login.signup.presentation.SignUpFragmentArgs
-import com.app.features.login.signup.presentation.SignUpState
 import com.example.navigation.HomeNavigator
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -43,7 +38,7 @@ class SignInFragment : Fragment() {
     }
     private fun setButton() = with(binding) {
         buttonContinue.setOnClickListener {
-            viewModel.signUp(email, textInputPassword.text.toString())
+            viewModel.signIn(email, textInputPassword.text.toString())
         }
     }
     private fun observer() = lifecycleScope.launch {
