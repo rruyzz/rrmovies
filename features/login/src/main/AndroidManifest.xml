@@ -4,6 +4,7 @@
     <application>
         <activity
             android:name=".login.presentation.LoginActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
 
     </application>
