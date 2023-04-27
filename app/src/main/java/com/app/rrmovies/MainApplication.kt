@@ -11,6 +11,9 @@ import com.app.detail.cast.data.mapper.CastMapper
 import com.app.detail.main.data.repository.CastRepositoryImpl
 import com.app.detail.main.data.service.DetailService
 import com.app.detail.main.domain.repository.DetailRepository
+import com.app.detail.main.domain.usecase.DeleteMovieUseCase
+import com.app.detail.main.domain.usecase.HasSavedMovieUseCase
+import com.app.detail.main.domain.usecase.UpsertMovieUseCase
 import com.app.detail.main.presentation.DetailViewModel
 import com.app.detail.navigation.DetailNavigatorImpl
 import com.app.features.home.home.data.mapper.MoviesMapper
@@ -33,6 +36,7 @@ import com.app.features.home.topRated.domain.TopRatedUseCase
 import com.app.features.home.topRated.presentation.TopRatedViewModel
 import com.app.features.home.upcoming.domain.UpcomingUseCase
 import com.app.features.home.upcoming.presentation.UpcomingViewModel
+import com.app.features.home.watchList.domain.WatchListUseCase
 import com.app.features.home.watchList.presentation.WatchListViewModel
 import com.app.features.login.login.data.google.GoogleAuth
 import com.app.features.login.login.data.repository.LoginRepositoryImpl
@@ -133,8 +137,14 @@ class MainApplication : Application() {
         viewModel { CastViewModel(castUseCase = CastUseCase(repository = get())) }
         viewModel { MainViewModel() }
         viewModel { SearchViewModel(searchMoviesUseCase = SearchUseCase(repository = get())) }
-        viewModel { DetailViewModel(dao = get()) }
-        viewModel { WatchListViewModel(dao = get()) }
+        viewModel {
+            DetailViewModel(
+                upsertMovieUseCase = UpsertMovieUseCase(get()),
+                deleteMovieUseCase = DeleteMovieUseCase(get()),
+                hasSavedMovieUseCase = HasSavedMovieUseCase(get()),
+            )
+        }
+        viewModel { WatchListViewModel(useCase = WatchListUseCase(get())) }
     }
     private val retrofitModule = module {
         single { createHttpClient() }

@@ -2,15 +2,19 @@ package com.app.detail.main.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.app.commons.room.MovieDao
 import com.app.commons.models.Movie
 import com.app.detail.main.domain.domain.UpdateMovie
+import com.app.detail.main.domain.usecase.DeleteMovieUseCase
+import com.app.detail.main.domain.usecase.HasSavedMovieUseCase
+import com.app.detail.main.domain.usecase.UpsertMovieUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 
 class DetailViewModel(
-    private val dao: MovieDao,
+    private val upsertMovieUseCase: UpsertMovieUseCase,
+    private val deleteMovieUseCase: DeleteMovieUseCase,
+    private val hasSavedMovieUseCase: HasSavedMovieUseCase
 ): ViewModel() {
 
     private val _detailState = MutableSharedFlow<DetailState>(0)
@@ -26,7 +30,7 @@ class DetailViewModel(
 
     private fun checkHasSaved(id: Int?) = viewModelScope.launch {
         id?.let{
-            dao.hasSaved(it).collect{ hasSaved ->
+            hasSavedMovieUseCase(it).collect{ hasSaved ->
                 _detailState.emit(DetailState.HasSavedMovie(hasSaved))
             }
         }
@@ -36,14 +40,14 @@ class DetailViewModel(
             is UpdateMovie.SaveMovie -> {
                 viewModelScope.launch {
                     movie?.let{
-                        dao.upsertMovie(it)
+                        upsertMovieUseCase(it)
                     }
                 }
             }
             is UpdateMovie.DeleteMovie -> {
                 viewModelScope.launch {
                     movie?.let{
-                        dao.deleteContact(it)
+                        deleteMovieUseCase(it)
                     }
                 }
             }

@@ -2,13 +2,13 @@ package com.app.features.home.watchList.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.app.commons.room.MovieDao
+import com.app.features.home.watchList.domain.WatchListUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class WatchListViewModel(
-    private val dao: MovieDao
+    private val useCase: WatchListUseCase
 ): ViewModel() {
 
     private val _watchListMoviesState = MutableSharedFlow<WatchListState>(0)
@@ -20,7 +20,7 @@ class WatchListViewModel(
     }
 
     private fun getPopularMovies() = viewModelScope.launch(Dispatchers.IO) {
-        dao.getMovies()
+        useCase()
             .flowOn(Dispatchers.IO)
             .collect {
                 _watchListMoviesState.emit(WatchListState.Success(it))
