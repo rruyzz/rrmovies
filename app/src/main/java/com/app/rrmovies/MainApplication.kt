@@ -9,8 +9,10 @@ import com.app.detail.cast.domain.usecase.CastUseCase
 import com.app.detail.cast.presentation.CastViewModel
 import com.app.detail.cast.data.mapper.CastMapper
 import com.app.detail.main.data.repository.CastRepositoryImpl
+import com.app.detail.main.data.repository.DetailMovieRepositoryImpl
 import com.app.detail.main.data.service.DetailService
 import com.app.detail.main.domain.repository.DetailRepository
+import com.app.detail.main.domain.repository.DetailMovieRepository
 import com.app.detail.main.domain.usecase.DeleteMovieUseCase
 import com.app.detail.main.domain.usecase.HasSavedMovieUseCase
 import com.app.detail.main.domain.usecase.UpsertMovieUseCase
@@ -36,7 +38,9 @@ import com.app.features.home.topRated.domain.TopRatedUseCase
 import com.app.features.home.topRated.presentation.TopRatedViewModel
 import com.app.features.home.upcoming.domain.UpcomingUseCase
 import com.app.features.home.upcoming.presentation.UpcomingViewModel
-import com.app.features.home.watchList.domain.WatchListUseCase
+import com.app.features.home.watchList.data.WatchListRepositoryImpl
+import com.app.features.home.watchList.domain.repository.WatchListRepository
+import com.app.features.home.watchList.domain.usecase.WatchListUseCase
 import com.app.features.home.watchList.presentation.WatchListViewModel
 import com.app.features.login.login.data.google.GoogleAuth
 import com.app.features.login.login.data.repository.LoginRepositoryImpl
@@ -112,6 +116,8 @@ class MainApplication : Application() {
         single<GenderRepository> { GenderRepositoryImpl(get(), GenderMapper()) }
         single<LoginRepository> { LoginRepositoryImpl(GoogleAuth(this@MainApplication, get())) }
         single<SignUpRepository> { SignUpRepositoryImpl(SignUpAuth()) }
+        single<DetailMovieRepository> { DetailMovieRepositoryImpl(get()) }
+        single<WatchListRepository> { WatchListRepositoryImpl(get()) }
     }
     private val loginModule = module {
         viewModel { SplashViewModel(genderUseCase = GenderUseCase(get())) }

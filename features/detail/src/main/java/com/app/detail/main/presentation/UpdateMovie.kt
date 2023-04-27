@@ -1,6 +1,4 @@
-package com.app.detail.main.domain.domain
-
-import com.app.commons.models.Movie
+package com.app.detail.main.presentation
 
 sealed interface UpdateMovie {
     object SaveMovie: UpdateMovie

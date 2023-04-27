@@ -1,12 +1,12 @@
 package com.app.detail.main.domain.usecase
 
 import com.app.commons.models.Movie
-import com.app.commons.room.MovieDao
+import com.app.detail.main.domain.repository.DetailMovieRepository
 
 class UpsertMovieUseCase(
-    private val dao: MovieDao
+    private val repository: DetailMovieRepository
 ) {
     suspend operator fun invoke(movie: Movie) {
-        dao.upsertMovie(movie)
+        repository.upsertMovie(movie)
     }
 }

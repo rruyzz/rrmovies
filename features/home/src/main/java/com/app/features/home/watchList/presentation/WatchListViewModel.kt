@@ -2,7 +2,7 @@ package com.app.features.home.watchList.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.app.features.home.watchList.domain.WatchListUseCase
+import com.app.features.home.watchList.domain.usecase.WatchListUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

@@ -10,7 +10,6 @@ import com.app.detail.R
 import com.app.detail.cast.presentation.CastFragment
 import com.app.detail.databinding.ActivityDetailBinding
 import com.app.detail.description.presentation.DescriptionFragment
-import com.app.detail.main.domain.domain.UpdateMovie
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.launch

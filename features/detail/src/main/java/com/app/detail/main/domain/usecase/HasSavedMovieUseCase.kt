@@ -1,12 +1,12 @@
 package com.app.detail.main.domain.usecase
 
-import com.app.commons.room.MovieDao
+import com.app.detail.main.domain.repository.DetailMovieRepository
 import kotlinx.coroutines.flow.Flow
 
 class HasSavedMovieUseCase(
-    private val dao: MovieDao
+    private val repository: DetailMovieRepository
 ) {
     operator fun invoke(movieId: Int): Flow<Boolean> {
-        return dao.hasSaved(movieId)
+        return repository.hasSaved(movieId)
     }
 }

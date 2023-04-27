@@ -3,7 +3,6 @@ package com.app.detail.main.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.commons.models.Movie
-import com.app.detail.main.domain.domain.UpdateMovie
 import com.app.detail.main.domain.usecase.DeleteMovieUseCase
 import com.app.detail.main.domain.usecase.HasSavedMovieUseCase
 import com.app.detail.main.domain.usecase.UpsertMovieUseCase
