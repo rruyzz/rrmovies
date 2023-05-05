@@ -21,9 +21,7 @@ class DetailMovieRepositoryImpl() : DetailMovieRepository {
                 .document(movie.id.toString())
                 .delete()
                 .await()
-            Log.d("FirestoreSave", "SUCESSO DELETE")
         } catch (exception: Exception) {
-            Log.d("FirestoreSave", exception.message.toString())
             throw exception
         }
         return flow {
@@ -53,9 +51,7 @@ class DetailMovieRepositoryImpl() : DetailMovieRepository {
                 .document(movie.id.toString())
                 .set(movie)
                 .await()
-            Log.d("FirestoreSave", "SUCESSO SAVE")
         } catch (exception: Exception) {
-            Log.d("FirestoreSave", exception.message.toString())
             throw exception
         }
         return flow {

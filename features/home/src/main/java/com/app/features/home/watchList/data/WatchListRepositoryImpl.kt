@@ -31,9 +31,7 @@ class WatchListRepositoryImpl() : WatchListRepository {
                         }
                     }
                 }
-            Log.d("FirestoreSave", "SUCESSO DELETE")
         } catch (exception: Exception) {
-            Log.d("FirestoreSave", exception.message.toString())
             throw exception
         }
         return flow {
