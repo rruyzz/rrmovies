@@ -1,21 +1,16 @@
 package com.app.detail.main.data.repository
 
-import android.content.ContentValues.TAG
 import android.util.Log
 import com.app.commons.models.Movie
-import com.app.commons.room.MovieDao
 import com.app.detail.main.domain.repository.DetailMovieRepository
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 
-class DetailMovieRepositoryImpl(
-    private val dao: MovieDao
-) : DetailMovieRepository {
+class DetailMovieRepositoryImpl() : DetailMovieRepository {
 
     override suspend fun deleteMovie(movie: Movie): Flow<Boolean> {
         try {

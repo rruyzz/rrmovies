@@ -19,7 +19,7 @@ class WatchListViewModel(
         getPopularMovies()
     }
 
-    private fun getPopularMovies() = viewModelScope.launch(Dispatchers.IO) {
+    fun getPopularMovies() = viewModelScope.launch(Dispatchers.IO) {
         useCase()
             .onCompletion {
                 _watchListMoviesState.emit(WatchListState.Loading(false))

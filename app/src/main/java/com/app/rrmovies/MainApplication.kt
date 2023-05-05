@@ -1,9 +1,6 @@
 package com.app.rrmovies
 
 import android.app.Application
-import androidx.room.Room
-import com.app.commons.room.MovieRoomDatabase
-import com.app.commons.room.MovieDao
 import com.app.commons.gender.GenderListMapper
 import com.app.detail.cast.domain.usecase.CastUseCase
 import com.app.detail.cast.presentation.CastViewModel
@@ -116,8 +113,8 @@ class MainApplication : Application() {
         single<GenderRepository> { GenderRepositoryImpl(get(), GenderMapper()) }
         single<LoginRepository> { LoginRepositoryImpl(GoogleAuth(this@MainApplication, get())) }
         single<SignUpRepository> { SignUpRepositoryImpl(SignUpAuth()) }
-        single<DetailMovieRepository> { DetailMovieRepositoryImpl(get()) }
-        single<WatchListRepository> { WatchListRepositoryImpl(get()) }
+        single<DetailMovieRepository> { DetailMovieRepositoryImpl() }
+        single<WatchListRepository> { WatchListRepositoryImpl() }
     }
     private val loginModule = module {
         viewModel { SplashViewModel(genderUseCase = GenderUseCase(get())) }
@@ -162,17 +159,6 @@ class MainApplication : Application() {
         single(createdAtStart = false) { get<Retrofit>().create(GenderService::class.java) }
         single { CreateUserUseCase(get()) }
         single { SignInUseCase(get()) }
-        single {
-            Room.databaseBuilder(
-                applicationContext,
-                MovieRoomDatabase::class.java,
-                "movie_database"
-            ).build()
-        }
-        single<MovieDao> {
-            val database = get<MovieRoomDatabase>()
-            database.dao
-        }
         single<SignInClient> {
             Identity.getSignInClient(applicationContext)
         }

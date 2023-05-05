@@ -1,9 +1,7 @@
 package com.app.features.home.watchList.data
 
 import android.util.Log
-import androidx.room.PrimaryKey
 import com.app.commons.models.Movie
-import com.app.commons.room.MovieDao
 import com.app.features.home.watchList.domain.repository.WatchListRepository
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentSnapshot
@@ -11,12 +9,9 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.tasks.await
 
-class WatchListRepositoryImpl(
-    private val dao: MovieDao
-) : WatchListRepository {
+class WatchListRepositoryImpl() : WatchListRepository {
     override suspend fun getMovies(): Flow<List<Movie>> {
         try {
             Firebase.firestore

@@ -37,6 +37,11 @@ class WatchListFragment : Fragment() {
         setButton()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getPopularMovies()
+    }
+
     private fun actionObserver() = lifecycleScope.launch {
         viewModel.watchListMoviesState.collect { state ->
             when (state) {
