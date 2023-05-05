@@ -21,21 +21,22 @@ class WatchListRepositoryImpl() : WatchListRepository {
                 .get()
                 .await()
                 .also {
-                    if(it.isEmpty.not()){
+                    return if(it.isEmpty.not()){
                         val list = mutableListOf<Movie>()
                         it.documents.forEach { doc ->
                             list.add(doc.mapperMovie())
                         }
-                        return flow {
+                        flow {
                             emit(list)
+                        }
+                    } else {
+                        flow {
+                            emit(listOf())
                         }
                     }
                 }
         } catch (exception: Exception) {
             throw exception
-        }
-        return flow {
-            emit(listOf())
         }
     }
 
