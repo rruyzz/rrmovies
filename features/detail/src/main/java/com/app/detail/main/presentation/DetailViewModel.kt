@@ -39,14 +39,18 @@ class DetailViewModel(
             is UpdateMovie.SaveMovie -> {
                 viewModelScope.launch {
                     movie?.let{
-                        upsertMovieUseCase(it)
+                        upsertMovieUseCase(it).collect{ hasSaved ->
+                            _detailState.emit(DetailState.HasSavedMovie(hasSaved))
+                        }
                     }
                 }
             }
             is UpdateMovie.DeleteMovie -> {
                 viewModelScope.launch {
                     movie?.let{
-                        deleteMovieUseCase(it)
+                        deleteMovieUseCase(it).collect{ hasSaved ->
+                            _detailState.emit(DetailState.HasSavedMovie(hasSaved))
+                        }
                     }
                 }
             }

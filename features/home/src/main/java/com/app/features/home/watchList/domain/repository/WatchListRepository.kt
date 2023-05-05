@@ -5,5 +5,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface WatchListRepository {
 
-    fun getMovies() : Flow<List<Movie>>
+    suspend fun getMovies() : Flow<List<Movie>>
 }

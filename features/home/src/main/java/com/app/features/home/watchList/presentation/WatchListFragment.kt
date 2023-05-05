@@ -12,6 +12,7 @@ import com.app.commons.models.Movie
 import com.app.features.home.databinding.FragmentWatchListBinding
 import com.app.features.home.home.domain.models.PopularMovies
 import com.app.features.home.home.presentation.adapter.DetailAdapter
+import com.app.features.home.topRated.presentation.TopRatedState
 import com.example.navigation.DetailNavigator
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -42,6 +43,12 @@ class WatchListFragment : Fragment() {
                 is WatchListState.Success -> {
                     renderSuccess(PopularMovies(state.movies))
                 }
+                is WatchListState.Loading -> {
+                    renderLoading(state.isLoading)
+                }
+                is WatchListState.Error -> {
+                    renderError(state.error)
+                }
             }
         }
     }
@@ -53,6 +60,10 @@ class WatchListFragment : Fragment() {
     }
     private fun renderError(error: String) {
 //        binding.textView.text = error
+    }
+
+    private fun renderLoading(isLoading: Boolean) {
+        binding.progress.isVisible = isLoading
     }
 
     private fun renderSuccess(list: PopularMovies) = with(binding) {

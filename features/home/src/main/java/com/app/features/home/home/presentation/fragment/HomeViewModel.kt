@@ -4,15 +4,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.features.home.home.domain.usecase.HomeUseCase
 import com.app.features.home.search.domain.usecase.SearchUseCase
+import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class HomeViewModel(
     private val popularMoviesUseCase: HomeUseCase,
-    private val searchMoviesUseCase: SearchUseCase,
+    private val oneTapClient: SignInClient
 ) : ViewModel() {
 
     private val _popularMoviesState = MutableSharedFlow<HomeState>(0)
@@ -24,6 +26,7 @@ class HomeViewModel(
 
     fun signOut() = viewModelScope.launch(Dispatchers.IO) {
         Firebase.auth.signOut()
+        oneTapClient.signOut().await()
         _popularMoviesState.emit(HomeState.FinishAffinity)
     }
     fun getPopularMovies() = viewModelScope.launch(Dispatchers.IO) {

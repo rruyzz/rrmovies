@@ -5,8 +5,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface DetailMovieRepository {
 
-    suspend fun deleteMovie(movie: Movie)
-    fun hasSaved(id: Int): Flow<Boolean>
-    suspend fun upsertMovie(movie: Movie)
+    suspend fun deleteMovie(movie: Movie): Flow<Boolean>
+    suspend fun hasSaved(id: Int): Flow<Boolean>
+    suspend fun upsertMovie(movie: Movie): Flow<Boolean>
 
 }

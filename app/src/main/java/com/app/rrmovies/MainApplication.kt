@@ -133,7 +133,7 @@ class MainApplication : Application() {
         viewModel {
             HomeViewModel(
                 popularMoviesUseCase = HomeUseCase(repository = get()),
-                searchMoviesUseCase = SearchUseCase(get())
+                oneTapClient = get()
             )
         }
         viewModel { NowPlayingViewModel(nowPlayingUseCase = NowPlayingUseCase(repository = get())) }

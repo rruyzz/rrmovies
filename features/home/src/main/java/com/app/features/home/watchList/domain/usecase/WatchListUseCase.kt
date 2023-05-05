@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 class WatchListUseCase(
     private val repository: WatchListRepository
 ) {
-    operator fun invoke() : Flow<List<Movie>>{
+    suspend operator fun invoke() : Flow<List<Movie>>{
         return repository.getMovies()
     }
 }
