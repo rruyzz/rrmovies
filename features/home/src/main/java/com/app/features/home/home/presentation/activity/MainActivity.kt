@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import com.app.commons.utils.hideStatusBar
 import com.app.features.home.R
 import com.app.features.home.databinding.ActivityMainBinding
+import com.app.features.home.profile.presentation.ProfileFragment
 import com.app.features.home.search.presentation.SearchFragment
 import com.google.android.material.navigation.NavigationBarView
 import kotlinx.coroutines.launch
@@ -63,6 +64,9 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.watchList -> {
                     viewModel.onBottomClick(MainState.WatchListState())
+                }
+                R.id.profile -> {
+                    viewModel.onBottomClick(MainState.ProfileState())
                 }
             }
             true

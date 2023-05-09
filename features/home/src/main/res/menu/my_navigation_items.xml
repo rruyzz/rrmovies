@@ -15,4 +15,9 @@
         android:title="Watch list"
         android:enabled="true"
         android:icon="@drawable/ic_save"/>
+    <item
+        android:id="@+id/profile"
+        android:title="Profile"
+        android:enabled="true"
+        android:icon="@drawable/ic_person"/>
 </menu>

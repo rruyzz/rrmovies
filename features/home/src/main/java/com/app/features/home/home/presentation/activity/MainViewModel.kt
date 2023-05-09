@@ -29,6 +29,9 @@ class MainViewModel : ViewModel() {
             is MainState.WatchListState -> {
                 _fragmentState.emit(fragmentType)
             }
+            is MainState.ProfileState -> {
+                _fragmentState.emit(fragmentType)
+            }
         }
     }
 

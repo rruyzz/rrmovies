@@ -30,6 +30,10 @@ import com.app.features.home.nowPlaying.domain.useCase.NowPlayingUseCase
 import com.app.features.home.nowPlaying.presentation.NowPlayingViewModel
 import com.app.features.home.popularMovies.domain.PopularMoviesUseCase
 import com.app.features.home.popularMovies.presentation.PopularMoviesViewModel
+import com.app.features.home.profile.data.repository.ProfileRepositoryImpl
+import com.app.features.home.profile.domain.repository.ProfileRepository
+import com.app.features.home.profile.domain.usecase.ProfilePictureUseCase
+import com.app.features.home.profile.presentation.ProfileViewModel
 import com.app.features.home.search.presentation.SearchViewModel
 import com.app.features.home.topRated.domain.TopRatedUseCase
 import com.app.features.home.topRated.presentation.TopRatedViewModel
@@ -115,6 +119,7 @@ class MainApplication : Application() {
         single<SignUpRepository> { SignUpRepositoryImpl(SignUpAuth()) }
         single<DetailMovieRepository> { DetailMovieRepositoryImpl() }
         single<WatchListRepository> { WatchListRepositoryImpl() }
+        single<ProfileRepository> { ProfileRepositoryImpl() }
     }
     private val loginModule = module {
         viewModel { SplashViewModel(genderUseCase = GenderUseCase(get())) }
@@ -148,6 +153,7 @@ class MainApplication : Application() {
             )
         }
         viewModel { WatchListViewModel(useCase = WatchListUseCase(get())) }
+        viewModel { ProfileViewModel(useCaseProfile = ProfilePictureUseCase(get()), get()) }
     }
     private val retrofitModule = module {
         single { createHttpClient() }
